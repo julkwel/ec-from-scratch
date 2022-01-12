@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\AdressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AdressRepository::class)
  */
 class Adress
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

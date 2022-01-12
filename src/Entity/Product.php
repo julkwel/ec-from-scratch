@@ -52,6 +52,11 @@ class Product
      */
     private $priceTtc;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $stock;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +142,18 @@ class Product
     public function setPriceTtc(?float $priceTtc): self
     {
         $this->priceTtc = $priceTtc;
+
+        return $this;
+    }
+
+    public function getStock(): ?float
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?float $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }

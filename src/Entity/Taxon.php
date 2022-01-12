@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\TaxonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TaxonRepository::class)
  */
 class Taxon
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

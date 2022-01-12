@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html.twig' %}
+{% block body %}
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Liste des rayons</h4>
+                        <a href="{{ path('admin_taxon_manage', {'id': 'x'}) }}">Nouveau</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <!-- Table with outer spacing -->
+                            <div class="table-responsive">
+                                <table class="table table-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for taxon in taxons %}
+                                        <tr>
+                                            <td class="text-bold-500">Michael Right</td>
+                                            <td><a href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">Modifier</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables end -->
+{% endblock %}
