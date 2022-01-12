@@ -70,10 +70,18 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
-    // .copyFiles({
-    //     from: './assets/front/images',
-    //     to: '/images/[path][name].[ext]',
-    // })
+    .copyFiles({
+        from: './assets/front/images',
+        to: '/images/[path][name].[ext]',
+    })
+    .autoProvidejQuery()
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Routing: 'router',
+    })
+
 ;
 
 module.exports = Encore.getWebpackConfig();
