@@ -57,6 +57,23 @@ class Product
      */
     private $stock;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPromo;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isNewness;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +171,42 @@ class Product
     public function setStock(?float $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getIsPromo(): ?bool
+    {
+        return $this->isPromo;
+    }
+
+    public function setIsPromo(?bool $isPromo): self
+    {
+        $this->isPromo = $isPromo;
+
+        return $this;
+    }
+
+    public function getIsNewness(): ?bool
+    {
+        return $this->isNewness;
+    }
+
+    public function setIsNewness(?bool $isNewness): self
+    {
+        $this->isNewness = $isNewness;
 
         return $this;
     }

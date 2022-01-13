@@ -16,14 +16,8 @@
 </head>
 <body>
 <div id="app" data-controller="admin">
-    {% include 'admin/menu/sidebar.html.twig' %}
-    <div id="main">
-        {% include 'admin/menu/header.html.twig' %}
-        <div class="page-content" style="min-height: 80vh">
-            {% block body %}{% endblock %}
-        </div>
-        {% include 'admin/menu/footer.html.twig' %}
-    </div>
+    {% block body %}{% endblock %}
+    {% include 'admin/menu/footer.html.twig' %}
 </div>
 </body>
 </html>

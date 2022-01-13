@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Products;
 use App\Controller\Admin\AbstractBaseAdminController;
 use App\Entity\Taxon;
 use App\Form\TaxonType;
+use App\Repository\TaxonRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +19,9 @@ class TaxonManagementController extends AbstractBaseAdminController
     /**
      * @Route("/", name="list")
      */
-    public function home()
+    public function home(TaxonRepository $taxonRepository)
     {
-        return $this->render('admin/taxon/listing.html.twig', ['taxons' => []]);
+        return $this->render('admin/taxon/listing.html.twig', ['taxons' => $taxonRepository->findAllItems()]);
     }
 
     /**
@@ -45,5 +46,21 @@ class TaxonManagementController extends AbstractBaseAdminController
         }
 
         return $this->render('admin/taxon/manage_product.html.twig', ['taxon' => $taxon, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/delete/{id?}", name="delete")
+     *
+     * @param Taxon $taxon
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function removeTaxon(Taxon $taxon): Response
+    {
+        $this->entityServices->removeObject($taxon);
+
+        return $this->redirectToRoute('admin_taxon_list');
     }
 }

@@ -59,8 +59,14 @@ class User implements UserInterface
      */
     private $adresses;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isEnabled;
+
     public function __construct()
     {
+        $this->isEnabled = true;
         $this->roles = ['ROLE_USER'];
         $this->adresses = new ArrayCollection();
     }
@@ -183,6 +189,18 @@ class User implements UserInterface
                 $adress->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsEnabled(): ?bool
+    {
+        return $this->isEnabled;
+    }
+
+    public function setIsEnabled(bool $isEnabled): self
+    {
+        $this->isEnabled = $isEnabled;
 
         return $this;
     }

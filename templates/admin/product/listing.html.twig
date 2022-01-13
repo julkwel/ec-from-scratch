@@ -1,0 +1,57 @@
+{% extends 'admin/layout.html.twig' %}
+{% block body %}
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title">Liste des produits</h4>
+                            </div>
+                            <div class="col justify-content-end d-flex">
+                                <a class="btn btn-success" href="{{ path('admin_product_manage') }}">Nouveau</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Libellé</th>
+                                        <th>Image</th>
+                                        <th>Prix</th>
+                                        <th>Remise</th>
+                                        <th>Prix TTC</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td class="text-bold-500">{{ product.label }}</td>
+                                            <td class="text-bold-500">
+                                                <img src="{{ asset('product_image/'~product.image) }}" width="50" height="50" alt="">
+                                            </td>
+                                            <td>{{ product.price }} Ar</td>
+                                            <td>{{ product.discount }} %</td>
+                                            <td>{{ product.priceTtc }} Ar</td>
+                                            <td>
+                                                <a href="{{ path('admin_product_manage', {'id': product.id}) }}">Modifier</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables end -->
+{% endblock %}

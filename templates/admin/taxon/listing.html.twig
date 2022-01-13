@@ -6,8 +6,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Liste des rayons</h4>
-                        <a href="{{ path('admin_taxon_manage', {'id': 'x'}) }}">Nouveau</a>
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title">Liste des rayons</h4>
+                            </div>
+                            <div class="col justify-content-end d-flex">
+                                <a class="btn btn-success" href="{{ path('admin_taxon_manage') }}">Nouveau</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -24,7 +30,9 @@
                                     {% for taxon in taxons %}
                                         <tr>
                                             <td class="text-bold-500">Michael Right</td>
-                                            <td><a href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">Modifier</a></td>
+                                            <td>
+                                                <a href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">Modifier</a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

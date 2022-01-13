@@ -19,22 +19,18 @@ class TaxonRepository extends ServiceEntityRepository
         parent::__construct($registry, Taxon::class);
     }
 
-    // /**
-    //  * @return Taxon[] Returns an array of Taxon objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Taxon[] Returns an array of Taxon objects
+      */
+    public function findAllItems(): array
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Taxon

@@ -42,6 +42,21 @@ class EntityServices
     }
 
     /**
+     * @throws Exception
+     */
+    public function removeObject(?object $entityObject)
+    {
+        if (!$entityObject) {
+            throw new Exception('Unable to find object');
+        }
+
+        $this->entityManager->remove($entityObject);
+        $this->entityManager->flush();
+
+        return true;
+    }
+
+    /**
      * @return EntityManagerInterface
      */
     public function getEntityManager()
