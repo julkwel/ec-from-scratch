@@ -25,6 +25,11 @@ class Taxon
      */
     private $label;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,6 +43,18 @@ class Taxon
     public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

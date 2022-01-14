@@ -23,7 +23,11 @@ class ProductManagementController extends AbstractBaseAdminController
      */
     public function home(Request $request, ProductRepository $productRepository): Response
     {
-        return $this->render('admin/product/listing.html.twig', ['products' => $productRepository->findProducts($request->get('search'))]);
+        $page = $request->query->getInt('page', 1);
+        $queryBuilder = $productRepository->findProducts($request->get('search'));
+        $pagination = $this->pagination->paginate($queryBuilder, $page, 10);
+
+        return $this->render('admin/product/listing.html.twig', ['products' => $pagination]);
     }
 
     /**

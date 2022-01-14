@@ -26,6 +26,27 @@ class ProductRepository extends ServiceEntityRepository
             ->setParameter('val', "%".$query."%")
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
+            ->getQuery();
+    }
+
+    public function findFeaturedProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.isNewness = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()->getResult();
+    }
+
+
+    public function findPromoProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.isPromo = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
             ->getQuery()->getResult();
     }
 }

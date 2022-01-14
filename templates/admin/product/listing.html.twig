@@ -21,6 +21,7 @@
                                 <table class="table table-lg">
                                     <thead>
                                     <tr>
+                                        <th>Rayon</th>
                                         <th>Libellé</th>
                                         <th>Image</th>
                                         <th>Prix</th>
@@ -32,9 +33,12 @@
                                     <tbody>
                                     {% for product in products %}
                                         <tr>
+                                            <td class="text-bold-500">{{ product.taxon ? product.taxon.label : 'Default' }}</td>
                                             <td class="text-bold-500">{{ product.label }}</td>
                                             <td class="text-bold-500">
-                                                <img src="{{ asset('product_image/'~product.image) }}" width="50" height="50" alt="">
+                                                {% if product.image is not empty %}
+                                                    <img src="{{ asset('product_image/'~product.image) }}" width="50" height="50" alt="">
+                                                {% endif %}
                                             </td>
                                             <td>{{ product.price }} Ar</td>
                                             <td>{{ product.discount }} %</td>
@@ -46,6 +50,7 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                                {{ knp_pagination_render(products) }}
                             </div>
                         </div>
                     </div>

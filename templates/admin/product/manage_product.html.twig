@@ -2,7 +2,9 @@
 
 {% block body %}
     {{ form_start(form) }}
-    <img src="{{ asset('product_image/'~product.image) }}" width="100" height="100" alt="">
+    {% if product.image is not empty %}
+        <img src="{{ asset('product_image/'~product.image) }}" width="100" height="100" alt="">
+    {% endif %}
     {{ form_widget(form) }}
     <input type="submit" class="btn btn-primary" value="enregistrer">
     {{ form_end(form) }}

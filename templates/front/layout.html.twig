@@ -14,6 +14,13 @@
     {% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
+
+<div data-controller="home-page">
+    <div class="site-wrap">
+        {% include 'front/menu/top_nav.html.twig' %}
+        {% block body %}{% endblock %}
+        {% include 'front/menu/footer.html.twig' %}
+    </div>
+</div>
 </body>
 </html>

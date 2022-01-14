@@ -7,6 +7,7 @@ use App\Entity\Taxon;
 use App\Form\TaxonType;
 use App\Repository\TaxonRepository;
 use Exception;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +41,13 @@ class TaxonManagementController extends AbstractBaseAdminController
         $form = $this->createForm(TaxonType::class, $taxon);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $productImage = $form->get('image')->getData();
+            if ($productImage instanceof UploadedFile) {
+                $this->fileUploader->setTargetDirectory($this->getParameter('product_image'));
+                $filename = $this->fileUploader->upload($productImage);
+                $taxon->setImage($filename);
+            }
+
             $this->entityServices->save($taxon);
 
             return $this->redirectToRoute('admin_taxon_list');

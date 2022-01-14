@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *
  * @method string getUserIdentifier()
  */
 class User implements UserInterface
@@ -110,7 +111,7 @@ class User implements UserInterface
 
     public function __call($name, $arguments)
     {
-        // TODO: Implement @method string getUserIdentifier()
+        return $this->username;
     }
 
     public function setPassword(?string $password): self
