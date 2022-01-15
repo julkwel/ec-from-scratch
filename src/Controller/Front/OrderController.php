@@ -125,6 +125,7 @@ class OrderController extends AbstractBaseFrontController
             if ($order instanceof Order) {
                 return $this->render('front/order/thanks.html.twig', ['order' => $order]);
             }
+
             $this->addFlash('error', 'Veuillez verifier la reference de votre paiement');
 
             return $this->redirectToRoute('order_checkout');

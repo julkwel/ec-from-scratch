@@ -13,23 +13,41 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">ADMINISTRATION</li>
-                <li class="sidebar-item active ">
-                    <a href="index.html" class='sidebar-link'>
+                <li class="sidebar-item  {% if menu_admin_dashboard is defined %}active{% endif %} ">
+                    <a href="{{ path('admin_home') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Tableau de bord</span>
                     </a>
                 </li>
-                <li class="sidebar-item  has-sub">
+                <li class="sidebar-item  has-sub  {% if menu_admin_product is defined or menu_admin_taxon is defined %}active{% endif %}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Produits</span>
                     </a>
-                    <ul class="submenu">
-                        <li class="submenu-item ">
+                    <ul class="submenu  {% if menu_admin_product is defined or menu_admin_taxon is defined %}active{% endif %}">
+                        <li class="submenu-item {% if menu_admin_taxon is defined %}active{% endif %}">
                             <a href="{{ path('admin_taxon_list') }}">Rayon</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item  {% if menu_admin_product is defined %}active{% endif %}">
                             <a href="{{ path('admin_product_list') }}">Products</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item  has-sub  {% if menu_admin_order is defined or menu_admin_order_to_shipped is defined or menu_admin_order_done is defined %}active{% endif %}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-basket"></i>
+                        <span>Achat</span>
+                    </a>
+                    <ul class="submenu  {% if menu_admin_order is defined or menu_admin_order_to_shipped is defined or menu_admin_order_done is defined %}active{% endif %}">
+                        <li class="submenu-item {% if menu_admin_order is defined %}active{% endif %}">
+                            <a href="{{ path('admin_order_to_validate_list') }}">A valider <span class="badge bg-danger">{{ count_to_validate_order() }}</span></a>
+                        </li>
+                        <li class="submenu-item {% if menu_admin_order_to_shipped is defined %}active{% endif %}">
+                            <a href="{{ path('admin_order_to_shipped') }}">A livrer  <span class="badge bg-danger">{{ count_to_shipped_order() }}</span></a>
+                        </li>
+                        <li class="submenu-item {% if menu_admin_order_done is defined %}active{% endif %}">
+                            <a href="{{ path('admin_order_validate_list') }}">Terminé   <span class="badge bg-danger">{{ count_to_finalize_order() }}</span></a>
                         </li>
                     </ul>
                 </li>

@@ -1,5 +1,5 @@
 {% extends 'admin/layout.html.twig' %}
-
+{% set menu_admin_product = true %}
 {% block body %}
     {{ form_start(form) }}
     {% if product.image is not empty %}

@@ -1,4 +1,5 @@
 {% extends 'admin/layout.html.twig' %}
+{% set menu_admin_product = true %}
 {% block body %}
     <!-- Basic Tables start -->
     <section class="section">
@@ -26,6 +27,7 @@
                                         <th>Image</th>
                                         <th>Prix</th>
                                         <th>Remise</th>
+                                        <th>Stock</th>
                                         <th>Prix TTC</th>
                                         <th>Action</th>
                                     </tr>
@@ -42,6 +44,7 @@
                                             </td>
                                             <td>{{ product.price }} Ar</td>
                                             <td>{{ product.discount }} %</td>
+                                            <td>{{ product.stock }} </td>
                                             <td>{{ product.priceTtc }} Ar</td>
                                             <td>
                                                 <a href="{{ path('admin_product_manage', {'id': product.id}) }}">Modifier</a>

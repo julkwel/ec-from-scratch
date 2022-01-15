@@ -1,0 +1,66 @@
+{% extends 'admin/layout.html.twig' %}
+{% set menu_admin_order_to_shipped = true %}
+{% block body %}
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Listing des achats a livrer</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <!-- Table with outer spacing -->
+                            <div class="table-responsive">
+                                <table class="table table-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Reference achats</th>
+                                        <th>Nom client</th>
+                                        <th>Contact</th>
+                                        <th>Adresse</th>
+                                        <th>Ref Facture</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td class="text-bold-500">{{ order.orderRef }}</td>
+                                            <td class="text-bold-500">{{ order.client.username }}</td>
+                                            <td class="text-bold-500">
+                                                {% if order.client.contact and order.client.contact.phone is not null %}
+                                                    {{ order.client.contact.phone }}
+                                                {% endif %}
+
+                                                {% if order.client.email and order.client.contact.phone is null and order.client.contact.email is not null %}
+                                                    {{ order.client.contact.email }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if order.addresse %}
+                                                    {{ order.addresse.ville~' '~order.addresse.lot }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ order.invoice.number }}</td>
+                                            <td class="text-bold-500">
+                                                <a class="btn btn-primary"
+                                                   href="{{ path('admin_order_ship', {'id': order.id}) }}">
+                                                    Go livraison
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {{ knp_pagination_render(orders) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables end -->
+{% endblock %}

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>VOKATSOA {% block title %} {% endblock %}</title>
     <link rel="icon" href="{{ asset('images/logo.jpg') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('admin') }}
     {% endblock %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('admin') }}
     {% endblock %}
 </head>
 <body>

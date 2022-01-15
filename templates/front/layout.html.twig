@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} Vokatsoa {% endblock %}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_link_tags('front') }}
     {% endblock %}
 </head>
 <body>
-
-<div data-controller="home-page">
+<div>
     <div class="site-wrap">
         {% include 'front/menu/top_nav.html.twig' %}
         {% for message in app.flashes('error') %}
@@ -52,5 +49,10 @@
         {% include 'front/menu/footer.html.twig' %}
     </div>
 </div>
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('front') }}
+{% endblock %}
 </body>
 </html>

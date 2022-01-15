@@ -51,9 +51,7 @@ class OrderManager extends AbstractManager
         if (!$orderItem->getId()) {
             $orderItem = $this->entityServices->getEntityManager()
                     ->getRepository(OrderItem::class)
-                    ->findOneBy([
-                        'item' => $product, 'client' => $user, 'state' => OrderItem::PRE_CART,
-                    ]) ?? new OrderItem();
+                    ->findOneBy(['item' => $product, 'client' => $user, 'state' => OrderItem::PRE_CART,]) ?? new OrderItem();
         }
 
         $orderItem->setCount($productCount);
@@ -61,7 +59,7 @@ class OrderManager extends AbstractManager
         $orderItem->setClient($user);
         $orderItem->setTotal($product->getPriceTtc() * $productCount);
         $orderItem->setState(OrderItem::PRE_CART);
-
+        $orderItem->getItem()->setStock($productCount - $orderItem->getItem()->getStock());
         $this->entityServices->save($orderItem);
 
         return $orderItem;
@@ -96,7 +94,10 @@ class OrderManager extends AbstractManager
                 $ville = $request->get('city');
                 $address = new Adress();
                 $address->setLot($lot)->setVille($ville);
+                $this->entityServices->save($address);
+
                 $user->addAdress($address);
+                $order->setAddresse($address);
             }
 
             if ($request->get('phone')) {
@@ -128,6 +129,7 @@ class OrderManager extends AbstractManager
 
             return $order;
         } catch (Exception $exception) {
+            dd($exception->getMessage());
             return false;
         }
     }

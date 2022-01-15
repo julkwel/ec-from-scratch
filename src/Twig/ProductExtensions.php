@@ -22,11 +22,17 @@ class ProductExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('count_product', [$this, 'countTaxonProduct']),
+            new TwigFunction('count_all_product', [$this, 'countAllProducts']),
         ];
     }
 
     public function countTaxonProduct(?int $taxonId)
     {
         return $this->productRepository->countProductByRayon($taxonId);
+    }
+
+    public function countAllProducts()
+    {
+        return $this->productRepository->countAllProducts();
     }
 }

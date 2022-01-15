@@ -1,5 +1,5 @@
 {% extends 'admin/layout.html.twig' %}
-
+{% set menu_admin_dashboard = true %}
 {% block body %}
     <section class="row">
         <div class="col-12 col-lg-9">
@@ -14,8 +14,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Profile Views</h6>
-                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                    <h6 class="text-muted font-semibold">Nombre des clients</h6>
+                                    <h6 class="font-extrabold mb-0">{{ count_all_clients() }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -27,12 +27,12 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="stats-icon blue">
-                                        <i class="iconly-boldProfile"></i>
+                                        <i class="iconly-boldCategory"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Followers</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                    <h6 class="text-muted font-semibold">Produits</h6>
+                                    <h6 class="font-extrabold mb-0">{{ count_all_product() }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -48,8 +48,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Following</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="text-muted font-semibold">Livraison en cours</h6>
+                                    <h6 class="font-extrabold mb-0">{{ count_shippement_process() }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -61,12 +61,12 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="stats-icon red">
-                                        <i class="iconly-boldBookmark"></i>
+                                        <i class="iconly-boldBag"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Saved Post</h6>
-                                    <h6 class="font-extrabold mb-0">112</h6>
+                                    <a href="{{ path('admin_order_to_validate_list') }}" class="text-muted font-semibold">Achats a valider</a>
+                                    <h6 class="font-extrabold mb-0">{{ count_to_validate_order() }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -82,30 +82,10 @@
                             <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Face 1">
                         </div>
                         <div class="ms-3 name">
-                            <h5 class="font-bold">John Duck</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
+{#                            <h5 class="font-bold">{{ app.user.firstname ~ " " ~ app.user.lastname }}</h5>#}
+                            <h6 class="text-muted mb-0">@{{ app.user.getUserIdentifier() }}</h6>
+                            <a href="{{ path('app_logout') }}">Se deconnecter</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4>Recent Alert</h4>
-                </div>
-                <div class="card-content pb-4">
-                    <div class="recent-message d-flex px-4 py-3">
-                        <div class="avatar avatar-lg">
-                            <img src="{{ asset('assets/images/faces/4.jpg') }}">
-                        </div>
-                        <div class="name ms-4">
-                            <h5 class="mb-1">Hank Schrader</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
-                        </div>
-                    </div>
-                    <div class="px-4">
-                        <button class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>
-                            View all alerts
-                        </button>
                     </div>
                 </div>
             </div>

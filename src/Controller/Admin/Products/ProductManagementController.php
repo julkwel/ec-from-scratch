@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductManagementController extends AbstractBaseAdminController
 {
     /**
-     * @Route("/{taxon?}", name="list")
+     * @Route("/rayon/{taxon?}", name="list")
      */
     public function home(Request $request, ProductRepository $productRepository, Taxon $taxon = null): Response
     {

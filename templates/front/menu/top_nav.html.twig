@@ -61,6 +61,9 @@
                 <li class="{% if taxon_menu is defined %}active{% endif %}"><a href="{{ path('front_taxon_list') }}">Catalogue</a></li>
                 <li class="{% if menu_newness is defined %}active{% endif %}"><a href="{{ path('front_newness_list') }}">Nouveauté</a></li>
                 <li class="{% if contact_menu is defined %}active{% endif %}"><a href="{{ path('front_contact') }}">Contact</a></li>
+                {% if app.user and is_granted('ROLE_CLIENT') %}
+                    <li class="{% if menu_order_tracking is defined %}active{% endif %}"><a href="{{ path('order_tracking') }}">Mes achats</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>

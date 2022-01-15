@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,7 +47,7 @@ class Order
     private $client;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="cart")
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="cart", cascade={"remove"})
      */
     private $items;
 
@@ -98,6 +100,11 @@ class Order
      * @ORM\Column(type="integer", nullable=true)
      */
     private $state;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Adress::class)
+     */
+    private $addresse;
 
     public function __construct()
     {
@@ -219,16 +226,23 @@ class Order
     public function setIsValid(?bool $isValid): self
     {
         $this->isValid = $isValid;
+        if ($isValid) {
+            $this->validatedAt = new DateTimeImmutable('now');
+        }
+
+        if (!$isValid) {
+            $this->validatedAt = null;
+        }
 
         return $this;
     }
 
-    public function getValidatedAt(): ?\DateTimeImmutable
+    public function getValidatedAt(): ?DateTimeImmutable
     {
         return $this->validatedAt;
     }
 
-    public function setValidatedAt(?\DateTimeImmutable $validatedAt): self
+    public function setValidatedAt(?DateTimeImmutable $validatedAt): self
     {
         $this->validatedAt = $validatedAt;
 
@@ -255,16 +269,19 @@ class Order
     public function setIsShipped(?bool $isShipped): self
     {
         $this->isShipped = $isShipped;
+        if ($isShipped){
+            $this->setShippedAt(new DateTimeImmutable('now'));
+        }
 
         return $this;
     }
 
-    public function getShippedAt(): ?\DateTimeImmutable
+    public function getShippedAt(): ?DateTimeImmutable
     {
         return $this->shippedAt;
     }
 
-    public function setShippedAt(?\DateTimeImmutable $shippedAt): self
+    public function setShippedAt(?DateTimeImmutable $shippedAt): self
     {
         $this->shippedAt = $shippedAt;
 
@@ -307,6 +324,17 @@ class Order
         return $this;
     }
 
+    public function getBasketTotal()
+    {
+        $total = 0;
+        /** @var OrderItem $item */
+        foreach ($this->items as $item) {
+            $total += $item->getTotalInt();
+        }
+
+        return $total;
+    }
+
     public function getStateToString()
     {
         switch ($this->state):
@@ -321,5 +349,17 @@ class Order
             default:
                 return 'En attente de validation';
         endswitch;
+    }
+
+    public function getAddresse(): ?Adress
+    {
+        return $this->addresse;
+    }
+
+    public function setAddresse(?Adress $addresse): self
+    {
+        $this->addresse = $addresse;
+
+        return $this;
     }
 }

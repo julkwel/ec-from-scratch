@@ -2,28 +2,43 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} Vokatsoa {% endblock %}</title>
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOKATSO</title>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_link_tags('admin') }}
     {% endblock %}
 </head>
 <body>
-<div id="app" data-controller="admin">
+<div id="app">
     {% include 'admin/menu/sidebar.html.twig' %}
     <div id="main">
         {% include 'admin/menu/header.html.twig' %}
-        <div class="page-content" style="min-height: 80vh">
+        <div class="page-heading" style="min-height: 85vh">
+{#            <div class="page-title">#}
+{#                <div class="row">#}
+{#                    <div class="col-12 col-md-6 order-md-1 order-last">#}
+{#                        <h3>Table</h3>#}
+{#                        <p class="text-subtitle text-muted">For user to check they list</p>#}
+{#                    </div>#}
+{#                    <div class="col-12 col-md-6 order-md-2 order-first">#}
+{#                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">#}
+{#                            <ol class="breadcrumb">#}
+{#                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>#}
+{#                                <li class="breadcrumb-item active" aria-current="page">Table</li>#}
+{#                            </ol>#}
+{#                        </nav>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
             {% block body %}{% endblock %}
         </div>
         {% include 'admin/menu/footer.html.twig' %}
     </div>
 </div>
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin') }}
+{% endblock %}
 </body>
 </html>
