@@ -34,6 +34,16 @@ class Invoice
      */
     private $number;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPaid;
+
+    public function __construct()
+    {
+        $this->isPaid = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +69,18 @@ class Invoice
     public function setNumber(?string $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
 
         return $this;
     }

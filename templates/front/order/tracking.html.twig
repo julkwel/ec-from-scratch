@@ -1,0 +1,31 @@
+{% extends 'front/layout.html.twig' %}
+{% set menu_order= true %}
+{% block body %}
+    <div class="site-section">
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nombre d'élements</th>
+                    <th>Reference achat</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td class="product-thumbnail">
+                            {{ order.items.count }}
+                        </td>
+                        <td class="product-name">
+                            <h2 class="h5 text-black">{{ order.orderRef }}</h2>
+                        </td>
+                        <td>{{ order.stateToString }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(orders) }}
+        </div>
+    </div>
+{% endblock %}

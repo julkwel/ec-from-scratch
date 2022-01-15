@@ -14,6 +14,7 @@ use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,11 +60,13 @@ class OrderController extends AbstractBaseFrontController
      * @Route("/precart", name="cart")
      *
      * @throws Exception
+     *
+     * @IsGranted("ROLE_CLIENT")
      */
-    public function checkoutPage(Request $request, OrderItemRepository $orderItemRepository)
+    public function precartPage(Request $request, OrderItemRepository $orderItemRepository)
     {
         $page = $request->query->getInt('page', 1);
-        $queryBuilder = $orderItemRepository->findPrecartItemByUserState($this->getUser() ? $this->getUser()->getId() : 0, OrderItem::PRE_CART);
+        $queryBuilder = $orderItemRepository->findPrecartItemByUserState($this->getUser()->getId(), OrderItem::PRE_CART);
         $pagination = $this->paginator->paginate($queryBuilder, $page, 5);
 
         return $this->render('front/order/cart_page.html.twig', ['orderItems' => $pagination]);
@@ -73,6 +76,8 @@ class OrderController extends AbstractBaseFrontController
      * @Route("/cart_item/{id?}", name="create_item")
      *
      * @throws Exception
+     *
+     * @IsGranted("ROLE_CLIENT")
      */
     public function addToCart(Request $request, ?OrderItem $item = null): RedirectResponse
     {
@@ -87,6 +92,8 @@ class OrderController extends AbstractBaseFrontController
      * @param OrderItem $orderItem
      *
      * @return RedirectResponse
+     *
+     * @IsGranted("ROLE_CLIENT")
      */
     public function removeOrderItem(OrderItem $orderItem): RedirectResponse
     {
@@ -94,5 +101,49 @@ class OrderController extends AbstractBaseFrontController
         $this->managerRegistry->getManager()->flush();
 
         return $this->redirectToRoute('order_cart');
+    }
+
+    /**
+     * @Route("/checkout", name="checkout")
+     *
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function checkoutPage(Request $request, OrderItemRepository $orderItemRepository)
+    {
+        $page = $request->query->getInt('page', 1);
+        $queryBuilder = $orderItemRepository->findPrecartItemByUserState($this->getUser()->getId(), OrderItem::PRE_CART);
+        $pagination = $this->paginator->paginate($queryBuilder, $page, 20);
+
+        if (0 === $pagination->getTotalItemCount()) {
+            $this->addFlash('warning', 'Vous n\'avez aucun produits a acheter pour le moment !');
+
+            return $this->redirectToRoute('order_cart');
+        }
+
+        if ($request->isMethod('POST')) {
+            $order = $this->orderManager->checkoutOrder($request, $this->getUser());
+            if ($order instanceof Order) {
+                return $this->render('front/order/thanks.html.twig', ['order' => $order]);
+            }
+            $this->addFlash('error', 'Veuillez verifier la reference de votre paiement');
+
+            return $this->redirectToRoute('order_checkout');
+        }
+
+        return $this->render('front/order/checkout.html.twig', ['items' => $pagination]);
+    }
+
+    /**
+     * @Route("/tracking", name="tracking")
+     *
+     * @return Response
+     */
+    public function orderTracking(Request $request)
+    {
+        $page = $request->query->getInt('page', 1);
+        $queryBuilder = $this->orderRepository->findUserOrder($this->getUser());
+        $pagination = $this->paginator->paginate($queryBuilder, $page, 20);
+
+        return $this->render('front/order/tracking.html.twig', ['orders' => $pagination]);
     }
 }
