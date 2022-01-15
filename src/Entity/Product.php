@@ -157,7 +157,14 @@ class Product
         return $this;
     }
 
-    public function getPriceTtc(): ?float
+    public function priceTTcRemise(): string
+    {
+        $discountedPrice = (int) $this->priceTtc * (1 - ((int) $this->discount / 100));
+
+        return number_format($discountedPrice, 2, ',', ' ');
+    }
+
+    public function getPriceTtc(): ?string
     {
         return $this->priceTtc;
     }

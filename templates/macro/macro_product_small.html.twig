@@ -12,7 +12,7 @@
                         <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a>
                     </h3>
                     <p class="mb-0">{{ product.description|slice(0, 50) }}</p>
-                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}</p>
+                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</p>
                 </div>
                 {{ _self.order_checkout_container(product) }}
             </div>
@@ -32,7 +32,7 @@
                 <div class="block-4-text p-4">
                     <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a></h3>
                     <p class="mb-0">{{ product.description|slice(0, 30) }}</p>
-                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}</p>
+                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</p>
                 </div>
                 {{ _self.order_checkout_container(product) }}
             </div>
@@ -42,7 +42,7 @@
 
 {% macro order_checkout_container(product) %}
     {% if app.user %}
-        <form action="{{ path('order_cart') }}">
+        <form action="{{ path('order_create_item') }}">
             <div class="mb-2 d-flex justify-content-center">
                 <input type="text" hidden name="product" value="{{ product.id }}">
                 <div class="input-group mb-3" style="max-width: 200px;">
@@ -55,7 +55,8 @@
                         <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                     </div>
                     <div class="input-group-append">
-                        <button href="{{ path('order_cart') }}" class="btn btn-outline-primary" title="ajouter au panier"
+                        <button href="{{ path('order_create_item') }}" class="btn btn-outline-primary"
+                                title="ajouter au panier"
                                 type="submit">
                             <i class="icon icon-shopping-basket"></i>
                         </button>
@@ -64,4 +65,65 @@
             </div>
         </form>
     {% endif %}
+{% endmacro %}
+
+{% macro order_list_render(order_items) %}
+    {% for order_item in order_items %}
+        <tr>
+            <td class="product-thumbnail">
+                {% if order_item.item.image is not null %}
+                    <img src="{{ asset('product_image/'~order_item.item.image) }}" alt="Image" class="img-fluid">
+                {% endif %}
+            </td>
+            <td class="product-name">
+                <h2 class="h5 text-black">{{ order_item.item.label }}</h2>
+            </td>
+            <td>Ar {{ order_item.item.priceTtc|number_format(2, ',', ' ') }}</td>
+            <td>
+                <form action="{{ path('order_create_item', {'id' : order_item.id}) }}">
+                    <div class="input-group mb-3" style="max-width: 200px;">
+                        <input type="text" hidden name="product" value="{{ order_item.item.id }}">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;
+                            </button>
+                        </div>
+                        <input type="text" class="form-control text-center" name="number" value="{{ order_item.count }}"
+                               placeholder=""
+                               aria-label="Example text with button addon"
+                               aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
+                            </button>
+                        </div>
+                        <div class="input-group-append">
+                            <button href="{{ path('order_create_item', {'id' : order_item.id}) }}"
+                                    class="btn btn-outline-primary" title="ajouter au panier"
+                                    type="submit">
+                                <i class="icon icon-shopping-basket"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+            <td>Ar {{ order_item.total }}</td>
+            <td><a href="{{ path('order_remove_item', {'id': order_item.id}) }}" class="btn btn-primary btn-sm">X</a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_product_details(product) %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ asset('product_image/'~product.image) }}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-black">{{ product.label }}</h2>
+            <p>{{ product.description }}</p>
+            <p><strong class="text-primary h4">Ar {{ product.priceTtc }}</strong></p>
+            <div class="mb-5">
+               {{ _self.order_checkout_container(product) }}
+            </div>
+        </div>
+    </div>
 {% endmacro %}

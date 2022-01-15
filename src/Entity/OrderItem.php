@@ -13,7 +13,11 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
  */
 class OrderItem
 {
+    public const PRE_CART = 1;
+    public const CART = 2;
+
     use SoftDeleteableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,6 +44,22 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="items")
      */
     private $cart;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $count;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $state;
+
+    public function __construct()
+    {
+        $this->state = self::PRE_CART;
+        $this->count = 1;
+    }
 
     public function getId(): ?int
     {
@@ -70,7 +90,12 @@ class OrderItem
         return $this;
     }
 
-    public function getTotal(): ?float
+    public function getTotal(): ?string
+    {
+        return number_format($this->total, 2, ',', ' ');
+    }
+
+    public function getTotalInt(): ?float
     {
         return $this->total;
     }
@@ -90,6 +115,30 @@ class OrderItem
     public function setCart(?Order $cart): self
     {
         $this->cart = $cart;
+
+        return $this;
+    }
+
+    public function getCount(): ?float
+    {
+        return $this->count;
+    }
+
+    public function setCount(float $count): self
+    {
+        $this->count = $count;
+
+        return $this;
+    }
+
+    public function getState(): ?int
+    {
+        return $this->state;
+    }
+
+    public function setState(int $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

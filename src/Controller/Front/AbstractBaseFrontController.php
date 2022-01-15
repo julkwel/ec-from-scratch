@@ -9,6 +9,7 @@ use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TaxonRepository;
 use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -37,13 +38,18 @@ abstract class AbstractBaseFrontController extends AbstractController
      * @var PaginatorInterface
      */
     public $paginator;
+    /**
+     * @var ManagerRegistry
+     */
+    public $managerRegistry;
 
-    public function __construct(ProductRepository $productRepository, TaxonRepository $taxonRepository, UserRepository $userRepository, OrderRepository $orderRepository, PaginatorInterface $paginator)
+    public function __construct(ProductRepository $productRepository, TaxonRepository $taxonRepository, UserRepository $userRepository, OrderRepository $orderRepository, PaginatorInterface $paginator, ManagerRegistry $managerRegistry)
     {
         $this->productRepository = $productRepository;
         $this->taxonRepository = $taxonRepository;
         $this->userRepository = $userRepository;
         $this->orderRepository = $orderRepository;
         $this->paginator = $paginator;
+        $this->managerRegistry = $managerRegistry;
     }
 }

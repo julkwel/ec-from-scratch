@@ -4,6 +4,10 @@ namespace App\Repository;
 
 use App\Entity\OrderItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +23,34 @@ class OrderItemRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderItem::class);
     }
 
-    // /**
-    //  * @return OrderItem[] Returns an array of OrderItem objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Query Returns an array of OrderItem objects
+     */
+    public function findPrecartItemByUserState(int $userId, int $state): Query
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('o.state = :val')
+            ->innerJoin('o.client', 'c', Join::WITH, 'c.id ='.$userId)
+            ->setParameter('val', $state)
             ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->getQuery();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?OrderItem
+    /**
+     * @param $userId
+     *
+     * @return int|mixed|string
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countPreCartItems($userId)
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->select('COUNT(o.id)')
+            ->andWhere('o.state = :val')
+            ->innerJoin('o.client', 'c', Join::WITH, 'c.id ='.$userId)
+            ->setParameter('val', OrderItem::PRE_CART)
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()->getSingleScalarResult();
     }
-    */
 }

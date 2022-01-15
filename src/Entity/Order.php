@@ -43,6 +43,16 @@ class Order
      */
     private $items;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $refShippement;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $refPaiement;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -125,6 +135,30 @@ class Order
                 $item->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRefShippement(): ?string
+    {
+        return $this->refShippement;
+    }
+
+    public function setRefShippement(?string $refShippement): self
+    {
+        $this->refShippement = $refShippement;
+
+        return $this;
+    }
+
+    public function getRefPaiement(): ?string
+    {
+        return $this->refPaiement;
+    }
+
+    public function setRefPaiement(?string $refPaiement): self
+    {
+        $this->refPaiement = $refPaiement;
 
         return $this;
     }
