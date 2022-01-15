@@ -137,6 +137,8 @@ class OrderController extends AbstractBaseFrontController
      * @Route("/tracking", name="tracking")
      *
      * @return Response
+     *
+     * @IsGranted("ROLE_CLIENT")
      */
     public function orderTracking(Request $request)
     {
@@ -145,5 +147,23 @@ class OrderController extends AbstractBaseFrontController
         $pagination = $this->paginator->paginate($queryBuilder, $page, 20);
 
         return $this->render('front/order/tracking.html.twig', ['orders' => $pagination]);
+    }
+
+    /**
+     * @Route("/details/{id}", name="details")
+     *
+     * @param Order $order
+     *
+     * @return Response
+     *
+     * @IsGranted("ROLE_CLIENT")
+     */
+    public function orderDetails(Order $order)
+    {
+        if ($this->getUser()->getId() !== $order->getClient()->getId()) {
+            return $this->redirectToRoute('order_home');
+        }
+
+        return $this->render('front/order/order_details.html.twig', ['items' => $order]);
     }
 }

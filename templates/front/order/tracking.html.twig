@@ -9,6 +9,7 @@
                     <th>Nombre d'élements</th>
                     <th>Reference achat</th>
                     <th>Status</th>
+                    <th>Details</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,7 +21,10 @@
                         <td class="product-name">
                             <h2 class="h5 text-black">{{ order.orderRef }}</h2>
                         </td>
-                        <td>{{ order.stateToString }}</td>
+                        <td>{{ order.getStateToString() }}</td>
+                        <td>
+                            <a href="{{ path('order_details', {'id': order.id}) }}"><i class="icon icon-eye"></i></a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

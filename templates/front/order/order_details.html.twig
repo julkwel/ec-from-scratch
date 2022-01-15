@@ -1,0 +1,29 @@
+{% extends 'front/layout.html.twig' %}
+{% set menu_order = true %}
+{% block body %}
+    <div class="site-section">
+        <div class="container">
+            <a href="{{ path('order_home', {'taxon': 'x'}) }}" class="btn btn-sm btn-outline-primary mb-3">Revenir au magasin</a>
+            <table class="table table-bordered site-block-order-table mb-5">
+                <thead>
+                <tr>
+                    <th>Produits</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set total = 0 %}
+                {% for item in items.items %}
+                    {% set total = total + item.getTotalInt() %}
+                    <tr>
+                        <td>{{ item.item.label }} <strong
+                                    class="mx-2">x</strong> {{ item.count }}
+                        </td>
+                        <td>Ar {{ item.total }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
