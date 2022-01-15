@@ -37,7 +37,7 @@ class OrderController extends AbstractBaseFrontController
      */
     public function checkoutPage(Request $request)
     {
-        dd($request->get('number'));
+
         return $this->render('front/order/cart_page.html.twig', ['']);
     }
 }

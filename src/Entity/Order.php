@@ -24,11 +24,6 @@ class Order
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class)
-     */
-    private $items;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $discount;
@@ -43,6 +38,11 @@ class Order
      */
     private $client;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="cart")
+     */
+    private $items;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -51,30 +51,6 @@ class Order
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Product $item): self
-    {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Product $item): self
-    {
-        $this->items->removeElement($item);
-
-        return $this;
     }
 
     public function getDiscount(): ?int
@@ -119,6 +95,36 @@ class Order
     public function setClient(?User $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderItem[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(OrderItem $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setCart($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(OrderItem $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getCart() === $this) {
+                $item->setCart(null);
+            }
+        }
 
         return $this;
     }

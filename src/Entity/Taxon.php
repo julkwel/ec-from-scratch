@@ -4,13 +4,18 @@ namespace App\Entity;
 
 use App\Repository\TaxonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TaxonRepository::class)
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
 class Taxon
 {
+    use SoftDeleteableEntity;
     use TimestampableEntity;
 
     /**
