@@ -29,9 +29,10 @@
                                     <tbody>
                                     {% for taxon in taxons %}
                                         <tr>
-                                            <td class="text-bold-500">Michael Right</td>
+                                            <td class="text-bold-500">{{ taxon.label }}</td>
                                             <td>
                                                 <a href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">Modifier</a>
+                                                <a href="{{ path('admin_product_list', {'taxon': taxon.id}) }}">Produits</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -54,12 +54,12 @@
     <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
             <ul class="site-menu js-clone-nav d-none d-md-block">
-                <li class="active">
+                <li class="{% if menu_home is defined %}active{% endif %}">
                     <a href="{{ path('front_home') }}">Home</a>
                 </li>
-                <li><a href="{{ path('order_home') }}">Shop</a></li>
-                <li><a href="#">Catalogue</a></li>
-                <li><a href="#">Nouveauté</a></li>
+                <li class="{% if menu_order is defined %}active{% endif %}"><a href="{{ path('order_home') }}">Shop</a></li>
+                <li class="{% if menu_taxon is defined %}active{% endif %}"><a href="{{ path('front_taxon_list') }}">Catalogue</a></li>
+                <li class="{% if menu_newness is defined %}active{% endif %}"><a href="{{ path('front_newness_list') }}">Nouveauté</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>

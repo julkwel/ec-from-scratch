@@ -1,0 +1,37 @@
+{% extends 'front/layout.html.twig' %}
+{% set menu_newness = true %}
+
+{% block body %}
+    <div class="site-section block-3 site-blocks-2 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 site-section-heading text-center pt-4">
+                    <h2>Produits nouveauté</h2>
+                </div>
+            </div>
+            <div class="row mb-5">
+                {% for product in featured %}
+                    <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                        <div class="block-4 text-center border">
+                            <figure class="block-4-image">
+                                <a href="{{ path('product_details', {'id': product.id}) }}">
+                                    <img src="{{ asset('product_image/'~product.image) }}"
+                                         alt="Image placeholder" class="img-fluid"></a>
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a></h3>
+                                <p class="mb-0">{{ product.description|slice(0, 30) }}</p>
+                                <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-12 text-center">
+                    {{ knp_pagination_render(featured) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

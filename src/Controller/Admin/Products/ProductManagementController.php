@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Products;
 
 use App\Controller\Admin\AbstractBaseAdminController;
 use App\Entity\Product;
+use App\Entity\Taxon;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -19,12 +20,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductManagementController extends AbstractBaseAdminController
 {
     /**
-     * @Route("/", name="list")
+     * @Route("/{taxon?}", name="list")
      */
-    public function home(Request $request, ProductRepository $productRepository): Response
+    public function home(Request $request, ProductRepository $productRepository, Taxon $taxon = null): Response
     {
         $page = $request->query->getInt('page', 1);
         $queryBuilder = $productRepository->findProducts($request->get('search'));
+        if ($taxon instanceof Taxon) {
+            $queryBuilder = $productRepository->findProductByTaxon($taxon->getId());
+        }
         $pagination = $this->pagination->paginate($queryBuilder, $page, 10);
 
         return $this->render('admin/product/listing.html.twig', ['products' => $pagination]);

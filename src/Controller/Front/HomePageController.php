@@ -2,8 +2,7 @@
 
 namespace App\Controller\Front;
 
-use App\Repository\ProductRepository;
-use App\Repository\TaxonRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,17 +14,34 @@ class HomePageController extends AbstractBaseFrontController
     /**
      * @Route(name="home")
      *
-     * @param ProductRepository $productRepository
-     * @param TaxonRepository   $taxonRepository
-     *
      * @return Response
      */
-    public function index(ProductRepository $productRepository, TaxonRepository $taxonRepository): Response
+    public function index(): Response
     {
-        $featured = $productRepository->findFeaturedProduct();
-        $promos = $productRepository->findPromoProduct();
-        $taxons = $taxonRepository->findAll();
+        $featured = $this->productRepository->findBy(['isNewness' => true], [], 3);
+        $promos = $this->productRepository->findBy(['isPromo' => true], [], 3);
+        $taxons = $this->taxonRepository->findBy([], [], 3);
 
         return $this->render('front/home_page.html.twig', ['featured' => $featured, 'promos' => $promos, 'taxons' => $taxons]);
+    }
+
+    /**
+     * @Route("taxon", name="taxon_list")
+     */
+    public function taxonPage()
+    {
+        return $this->render('front/product/taxon.page.html.twig', ['taxons' => $this->taxonRepository->findAll()]);
+    }
+
+    /**
+     * @Route("newness", name="newness_list")
+     */
+    public function newnessPage(Request $request)
+    {
+        $page = $request->query->getInt('page', 1);
+        $queryBuilder = $this->productRepository->findFeaturedProduct();
+        $pagination = $this->paginator->paginate($queryBuilder, $page, 10);
+
+        return $this->render('front/product/newness.page.html.twig', ['featured' => $pagination]);
     }
 }

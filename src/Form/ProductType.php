@@ -23,7 +23,7 @@ class ProductType extends AbstractType
             ->add('discount')
             ->add('priceTtc')
             ->add('stock')
-            ->add('taxon', EntityType::class, ['class' => Taxon::class, 'choice_label' => 'label'])
+            ->add('taxon', EntityType::class, ['class' => Taxon::class, 'choice_label' => 'label', 'required' => false])
             ->add('image', FileType::class, ['mapped' => false, 'required' => false])
             ->add('isNewness', CheckboxType::class, ['label' => 'Nouveauté', 'required' => false])
             ->add('isPromo', CheckboxType::class, ['label' => 'Promotion', 'required' => false]);

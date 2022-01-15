@@ -1,0 +1,30 @@
+{% extends 'front/layout.html.twig' %}
+{% set taxon_menu = true %}
+{% block body %}
+    <div class="site-section site-blocks-2">
+        <div class="container">
+            <div class="row">
+                {% for taxon in taxons %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                        <a class="block-2-item" href="{{ path('order_home', {'taxon': taxon.id}) }}">
+                            <figure class="image">
+                                {% if taxon.image %}
+                                    <img src="{{ asset('product_image/'~taxon.image) }}" alt=""
+                                         style="min-height: 430px!important;" class="img-fluid">
+                                {% else %}
+                                    <img src="{{ asset('assets/images/samples/motorcycle.jpg') }}"
+                                         style="min-height: 430px!important;" alt="" class="img-fluid">
+                                {% endif %}
+                            </figure>
+                            <div class="text">
+                                <span class="text-uppercase">Rayon</span>
+                                <h3>{{ taxon.label }}</h3>
+                                <span>({{ count_product(taxon.id) }})</span>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'front/layout.html.twig' %}
-
+{% set menu_home = true %}
 {% block body %}
     <div class="site-blocks-cover" style="background-image: url({{ asset('images/hero_1.jpg') }});"
          data-aos="fade">
@@ -63,7 +63,7 @@
             <div class="row">
                 {% for taxon in taxons %}
                     <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                        <a class="block-2-item" href="#">
+                        <a class="block-2-item" href="{{ path('order_home', {'taxon': taxon.id}) }}">
                             <figure class="image">
                                 {% if taxon.image %}
                                     <img src="{{ asset('product_image/'~taxon.image) }}" alt=""
@@ -99,14 +99,14 @@
                                 <div class="block-4 text-center">
                                     <figure class="block-4-image">
                                         <img src="{{ asset('product_image/'~product.image) }}"
-                                             alt="{{ product.label }}" style="min-height: 250px!important;"
+                                             alt="{{ product.label }}" style="height: 250px!important;"
                                              class="img-fluid">
                                     </figure>
                                     <div class="block-4-text p-4">
                                         <h3>
                                             <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a>
                                         </h3>
-                                        <p class="mb-0">{{ product.description }}</p>
+                                        <p class="mb-0">{{ product.description|slice(1, 30) }}</p>
                                         <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}
                                         </p>
                                     </div>
