@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractBaseFrontController
 {
     /**
-     * @Route("/{taxon?}", name="home")
+     * @Route("/taxon/{taxon?}", name="home")
      *
      * @return Response
      */
@@ -30,5 +30,14 @@ class OrderController extends AbstractBaseFrontController
         $taxons = $this->taxonRepository->findAll();
 
         return $this->render('front/order/order_home.html.twig', ['products' => $pagination, 'taxons' => $taxons]);
+    }
+
+    /**
+     * @Route("/cart", name="cart")
+     */
+    public function checkoutPage(Request $request)
+    {
+        dd($request->get('number'));
+        return $this->render('front/order/cart_page.html.twig', ['']);
     }
 }

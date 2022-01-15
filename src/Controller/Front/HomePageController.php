@@ -44,4 +44,17 @@ class HomePageController extends AbstractBaseFrontController
 
         return $this->render('front/product/newness.page.html.twig', ['featured' => $pagination]);
     }
+
+    /**
+     *
+     * @Route("contact", name="contact")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function contactPage(Request $request)
+    {
+        return $this->render('front/contact/contact.html.twig', ['' => '']);
+    }
 }

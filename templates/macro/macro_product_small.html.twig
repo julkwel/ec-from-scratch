@@ -1,0 +1,67 @@
+{% macro render_products(products) %}
+    {% for product in products %}
+        <div class="item">
+            <div class="block-4 text-center">
+                <figure class="block-4-image">
+                    <img src="{{ asset('product_image/'~product.image) }}"
+                         alt="{{ product.label }}" style="height: 250px!important;"
+                         class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                    <h3>
+                        <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a>
+                    </h3>
+                    <p class="mb-0">{{ product.description|slice(0, 50) }}</p>
+                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}</p>
+                </div>
+                {{ _self.order_checkout_container(product) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_order_product(products) %}
+    {% for product in products %}
+        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="block-4 text-center border">
+                <figure class="block-4-image">
+                    <a href="{{ path('product_details', {'id': product.id}) }}">
+                        <img src="{{ asset('product_image/'~product.image) }}"
+                             alt="Image placeholder" class="img-fluid"></a>
+                </figure>
+                <div class="block-4-text p-4">
+                    <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a></h3>
+                    <p class="mb-0">{{ product.description|slice(0, 30) }}</p>
+                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}</p>
+                </div>
+                {{ _self.order_checkout_container(product) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro order_checkout_container(product) %}
+    {% if app.user %}
+        <form action="{{ path('order_cart') }}">
+            <div class="mb-2 d-flex justify-content-center">
+                <input type="text" hidden name="product" value="{{ product.id }}">
+                <div class="input-group mb-3" style="max-width: 200px;">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                    </div>
+                    <input type="text" name="number" class="form-control text-center" value="1" placeholder=""
+                           aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                    </div>
+                    <div class="input-group-append">
+                        <button href="{{ path('order_cart') }}" class="btn btn-outline-primary" title="ajouter au panier"
+                                type="submit">
+                            <i class="icon icon-shopping-basket"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+{% endmacro %}

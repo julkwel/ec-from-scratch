@@ -1,4 +1,5 @@
 {% extends 'front/layout.html.twig' %}
+{% import 'macro/macro_product_small.html.twig' as macro_product %}
 {% set menu_home = true %}
 {% block body %}
     <div class="site-blocks-cover" style="background-image: url({{ asset('images/hero_1.jpg') }});"
@@ -94,25 +95,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="nonloop-block-3 owl-carousel">
-                        {% for product in featured %}
-                            <div class="item">
-                                <div class="block-4 text-center">
-                                    <figure class="block-4-image">
-                                        <img src="{{ asset('product_image/'~product.image) }}"
-                                             alt="{{ product.label }}" style="height: 250px!important;"
-                                             class="img-fluid">
-                                    </figure>
-                                    <div class="block-4-text p-4">
-                                        <h3>
-                                            <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a>
-                                        </h3>
-                                        <p class="mb-0">{{ product.description|slice(1, 30) }}</p>
-                                        <p class="text-primary font-weight-bold">Ar {{ product.priceTtc }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+                        {{ macro_product.render_products(featured) }}
                     </div>
                 </div>
             </div>
