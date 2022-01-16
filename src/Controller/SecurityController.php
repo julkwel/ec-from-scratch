@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Controller\Admin\AbstractBaseAdminController;
+use App\Entity\Provider;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Manager\UserManager;
 use Exception;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,18 +39,14 @@ class SecurityController extends AbstractBaseAdminController
      *
      * @throws Exception
      */
-    public function createAccount(Request $request)
+    public function manageUser(Request $request, UserManager $userManager)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $form->get('password')->getData();
-            $user->setIsEnabled(true);
-            $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
-            $user->setRoles(['ROLE_CLIENT']);
-            $this->entityServices->save($user);
+            $userManager->generateUser($form, $user);
 
             return $this->redirectToRoute('app_login');
         }

@@ -1,0 +1,41 @@
+{% extends 'front/layout.html.twig' %}
+{% block body %}
+    <div class="site-section container">
+        {{ form_start(form) }}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 class="auth-title">Information personnel</h1>
+                    {{ form_row(form.firstname) }}
+                    {{ form_row(form.lastname) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.password) }}
+                </div>
+                <div class="col-md-6">
+                    <h1 class="auth-title">Information de votre société</h1>
+                    <div class="form-group">
+                        <label for="user_password" class="required">Nom de votre société</label>
+                        <input type="text" id="user_password" name="label" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password" class="required">NIF/STAT</label>
+                        <input type="text" id="user_password" name="nif_stat" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password" class="required">Adresse exacte de votre société</label>
+                        <input type="text" id="user_password" name="adresse" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password" class="required">Contact</label>
+                        <input type="text" id="user_password" name="contact" required="required" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Enregistrer</button>
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

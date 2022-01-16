@@ -15,6 +15,7 @@ security:
         ROLE_ADMIN: ROLE_ADMIN
         ROLE_CLIENT_ADMIN: ROLE_CLIENT_ADMIN
         ROLE_CLIENT: ROLE_CLIENT
+        ROLE_PROVIDER: ROLE_PROVIDER
         ROLE_USER: ROLE_USER
     firewalls:
         dev:

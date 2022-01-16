@@ -90,6 +90,11 @@ class Product
      */
     private $unit;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Provider::class, inversedBy="products")
+     */
+    private $provider;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -260,6 +265,18 @@ class Product
     public function setUnit(?string $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getProvider(): ?Provider
+    {
+        return $this->provider;
+    }
+
+    public function setProvider(?Provider $provider): self
+    {
+        $this->provider = $provider;
 
         return $this;
     }
