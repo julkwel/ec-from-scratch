@@ -659,7 +659,7 @@ a {
   position: relative; }
   .site-block-top-search .icon {
     position: absolute;
-    left: 0;
+    left: 20%;
     top: 50%;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);

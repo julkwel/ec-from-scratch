@@ -58,12 +58,20 @@
                         <button href="{{ path('order_create_item') }}" class="btn btn-outline-primary"
                                 title="ajouter au panier"
                                 type="submit">
-                            <i class="icon icon-shopping-basket"></i>
+                            <i class="icon icon-shopping-cart"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </form>
+    {% else %}
+        <div class="input-group-append d-flex justify-content-center mb-2">
+            <a href="{{ path('app_login') }}" class="btn btn-primary mb-2"
+                    title="ajouter au panier"
+                    type="submit">
+                <i class="icon icon-shopping-basket"></i>
+            </a>
+        </div>
     {% endif %}
 {% endmacro %}
 
@@ -97,16 +105,16 @@
                         </div>
                         <div class="input-group-append">
                             <button href="{{ path('order_create_item', {'id' : order_item.id}) }}"
-                                    class="btn btn-outline-primary" title="ajouter au panier"
+                                    class="btn btn-outline-primary" title="Mettre a jour"
                                     type="submit">
-                                <i class="icon icon-shopping-basket"></i>
+                                <i class="icon icon-shopping-cart"></i>
                             </button>
                         </div>
                     </div>
                 </form>
             </td>
             <td>Ar {{ order_item.total }}</td>
-            <td><a href="{{ path('order_remove_item', {'id': order_item.id}) }}" class="btn btn-primary btn-sm">X</a>
+            <td><a href="{{ path('order_remove_item', {'id': order_item.id}) }}" class="btn btn-danger btn-sm">X</a>
             </td>
         </tr>
     {% endfor %}
@@ -122,7 +130,7 @@
             <p>{{ product.description }}</p>
             <p><strong class="text-primary h4">Ar {{ product.priceTtc }}</strong></p>
             <div class="mb-5">
-               {{ _self.order_checkout_container(product) }}
+                {{ _self.order_checkout_container(product) }}
             </div>
         </div>
     </div>

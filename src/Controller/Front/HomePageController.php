@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Manager\ContactManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +19,8 @@ class HomePageController extends AbstractBaseFrontController
      */
     public function index(): Response
     {
-        $featured = $this->productRepository->findBy(['isNewness' => true], [], 3);
-        $promos = $this->productRepository->findBy(['isPromo' => true], [], 3);
+        $featured = $this->productRepository->findBy(['isNewness' => true], [], 6);
+        $promos = $this->productRepository->findBy(['isPromo' => true], [], 6);
         $taxons = $this->taxonRepository->findBy([], [], 3);
 
         return $this->render('front/home_page.html.twig', ['featured' => $featured, 'promos' => $promos, 'taxons' => $taxons]);
@@ -49,12 +50,20 @@ class HomePageController extends AbstractBaseFrontController
      *
      * @Route("contact", name="contact")
      *
-     * @param Request $request
+     * @param Request        $request
+     * @param ContactManager $contactManager
      *
      * @return Response
      */
-    public function contactPage(Request $request)
+    public function contactPage(Request $request, ContactManager $contactManager)
     {
+        if ($request->isMethod('POST')) {
+            $contactManager->sendMailFromClient($request);
+            $this->addFlash('success', 'Merci d\'avoir nous contacter');
+
+            return $this->redirectToRoute('front_home');
+        }
+
         return $this->render('front/contact/contact.html.twig', ['' => '']);
     }
 }

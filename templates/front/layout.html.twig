@@ -12,43 +12,43 @@
     {% endblock %}
 </head>
 <body>
-<div>
     <div class="site-wrap">
         {% include 'front/menu/top_nav.html.twig' %}
-        {% for message in app.flashes('error') %}
-            <div class="row mb-5 flash-notice alert-danger">
-                <div class="col-md-12">
-                    <div class="border p-4 rounded" role="alert">
-                        {{ message }}
+        <div class="container">
+            {% for message in app.flashes('error') %}
+                <div class="row mb-5 flash-notice alert-danger">
+                    <div class="col-md-12">
+                        <div class="border p-4 rounded" role="alert">
+                            {{ message }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        {% for message in app.flashes('warning') %}
-            <div class="row mb-5 flash-notice alert-warning">
-                <div class="col-md-12">
-                    <div class="border p-4 rounded" role="alert">
-                        {{ message }}
+            {% for message in app.flashes('warning') %}
+                <div class="row mb-5 flash-notice alert-warning">
+                    <div class="col-md-12">
+                        <div class="border p-4 rounded" role="alert">
+                            {{ message }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        {% for message in app.flashes('success') %}
-            <div class="row mb-5 flash-notice alert-warning">
-                <div class="col-md-12">
-                    <div class="border p-4 rounded" role="alert">
-                        {{ message }}
+            {% for message in app.flashes('success') %}
+                <div class="row mb-5 flash-notice alert-success">
+                    <div class="col-md-12">
+                        <div class="border p-4 rounded" role="alert">
+                            {{ message }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
+        </div>
         {% block body %}{% endblock %}
         {% include 'front/menu/footer.html.twig' %}
     </div>
-</div>
 
 
 {% block javascripts %}

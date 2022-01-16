@@ -47,7 +47,7 @@ class OrderController extends AbstractBaseFrontController
         $queryBuilder = $this->productRepository->findProducts($request->get('search'));
 
         if ($taxon instanceof Taxon) {
-            $queryBuilder = $this->productRepository->findProductByTaxon($taxon->getId());
+            $queryBuilder = $this->productRepository->findProductByTaxon($taxon->getId(), $request->get('search'));
         }
 
         $pagination = $this->paginator->paginate($queryBuilder, $page, 10);

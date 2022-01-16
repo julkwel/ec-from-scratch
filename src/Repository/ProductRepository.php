@@ -25,19 +25,19 @@ class ProductRepository extends ServiceEntityRepository
     public function findProducts(?string $query)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.label LIKE :val')
-            ->setParameter('val', "%".$query."%")
+            ->where('p.label LIKE :val')
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->setParameter('val', "%".$query."%")
             ->getQuery();
     }
 
-    public function findProductByTaxon(?int $taxonId)
+    public function findProductByTaxon(?int $taxonId, ?string $query = '')
     {
         return $this->createQueryBuilder('p')
+            ->where('p.label LIKE :val')
+            ->setParameter('val', "%".$query."%")
             ->innerJoin('p.taxon', 't', Join::WITH, 't.id ='.$taxonId)
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery();
     }
 

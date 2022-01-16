@@ -80,6 +80,11 @@ class Product
      */
     private $isNewness;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $promoDiscount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -220,6 +225,18 @@ class Product
     public function setIsNewness(?bool $isNewness): self
     {
         $this->isNewness = $isNewness;
+
+        return $this;
+    }
+
+    public function getPromoDiscount(): ?float
+    {
+        return $this->promoDiscount;
+    }
+
+    public function setPromoDiscount(?float $promoDiscount): self
+    {
+        $this->promoDiscount = $promoDiscount;
 
         return $this;
     }
