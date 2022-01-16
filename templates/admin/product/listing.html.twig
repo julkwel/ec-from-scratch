@@ -19,14 +19,14 @@
                     <div class="card-content">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-lg">
+                                <table class="table  table-bordered">
                                     <thead>
                                     <tr>
                                         <th>Rayon</th>
                                         <th>Libellé</th>
                                         <th>Image</th>
                                         <th>Prix</th>
-                                        <th>Remise</th>
+                                        <th>Remise / Don</th>
                                         <th>Stock</th>
                                         <th>Prix TTC</th>
                                         <th>Action</th>
@@ -47,7 +47,12 @@
                                             <td>{{ product.stock }} </td>
                                             <td>{{ product.priceTtc }} Ar</td>
                                             <td>
-                                                <a href="{{ path('admin_product_manage', {'id': product.id}) }}">Modifier</a>
+                                                <a class="btn btn-primary"  href="{{ path('admin_product_manage', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-document-edit"></i>
+                                                </a>
+                                                <a class="btn btn-danger" href="{{ path('admin_product_remove', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}

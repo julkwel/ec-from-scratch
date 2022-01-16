@@ -1,0 +1,41 @@
+{% extends 'admin/layout.html.twig' %}
+{% set menu_admin_order = true %}
+{% block body %}
+    <section class="section">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="pricing">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 px-0">
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <div class="card card-highlighted">
+                                <div class="card-header text-center">
+                                    <h4 class="card-title">{{ order.client ? order.client.username : '' }}</h4>
+                                    <p>Ref : {{ order.orderRef }}</p>
+                                </div>
+                                <h1 class="price text-white">Ar {{ order.basketTotal|number_format(2,',', ' ') }}</h1>
+                                <ul>
+                                    {% for item in order.items %}
+                                        <li>
+                                            <i class="bi bi-check-circle"></i>
+                                            {{ item.item.label }}
+                                            <strong class="mx-2">x</strong> {{ item.count }}
+                                            Ar {{ item.total }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="card-footer">
+                                    <a href="{{ path('admin_order_validate', {'id': order.id }) }}"
+                                       class="btn btn-outline-white btn-block">Valider maintenant</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 px-0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

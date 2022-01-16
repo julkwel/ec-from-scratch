@@ -29,4 +29,13 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()->getSingleScalarResult();
     }
 
+    public function findAllClients()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%ROLE_CLIENT%')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery();
+    }
+
 }

@@ -40,7 +40,6 @@ class SecurityController extends AbstractBaseAdminController
     public function createAccount(Request $request)
     {
         $user = new User();
-        $user->setRoles(['ROLE_CLIENT']);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -48,6 +47,7 @@ class SecurityController extends AbstractBaseAdminController
             $password = $form->get('password')->getData();
             $user->setIsEnabled(true);
             $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
+            $user->setRoles(['ROLE_CLIENT']);
             $this->entityServices->save($user);
 
             return $this->redirectToRoute('app_login');

@@ -23,6 +23,7 @@ class ProductExtensions extends AbstractExtension
         return [
             new TwigFunction('count_product', [$this, 'countTaxonProduct']),
             new TwigFunction('count_all_product', [$this, 'countAllProducts']),
+            new TwigFunction('count_default_product', [$this, 'countDefaultProduct']),
         ];
     }
 
@@ -34,5 +35,10 @@ class ProductExtensions extends AbstractExtension
     public function countAllProducts()
     {
         return $this->productRepository->countAllProducts();
+    }
+
+    public function countDefaultProduct()
+    {
+        return $this->productRepository->countProductWithoutRayon();
     }
 }

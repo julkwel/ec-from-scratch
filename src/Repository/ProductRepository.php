@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,7 +27,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.label LIKE :val')
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.id', 'DESC')
             ->setParameter('val', "%".$query."%")
             ->getQuery();
     }
@@ -37,7 +38,7 @@ class ProductRepository extends ServiceEntityRepository
             ->where('p.label LIKE :val')
             ->setParameter('val', "%".$query."%")
             ->innerJoin('p.taxon', 't', Join::WITH, 't.id ='.$taxonId)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
     }
 
@@ -57,6 +58,25 @@ class ProductRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
+    public function countProductWithoutRayon()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.taxon IS NULL')
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    public function findProductWithoutRayon(): Query
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.taxon IS NULL')
+            ->getQuery();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function countAllProducts()
     {
         return $this->createQueryBuilder('p')
@@ -69,7 +89,7 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.isNewness = :val')
             ->setParameter('val', true)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
     }
 
@@ -78,7 +98,7 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.isPromo = :val')
             ->setParameter('val', true)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
     }
 }

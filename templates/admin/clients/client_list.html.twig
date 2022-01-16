@@ -1,0 +1,65 @@
+{% extends 'admin/layout.html.twig' %}
+{% set menu_admin_client = true %}
+{% block body %}
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title">Liste des clients</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <!-- Table with outer spacing -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Nom d'utilisateur</th>
+                                        <th>Contact</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for client in clients %}
+                                        <tr>
+                                            <td>{{ client.firstname }}</td>
+                                            <td>{{ client.lastname }}</td>
+                                            <td>{{ client.username }}</td>
+                                            <td>
+                                                {% if client.contact and client.contact.phone is not null %}
+                                                    {{ client.contact.phone }}
+                                                {% endif %}
+
+                                                {% if client.contact and client.contact.phone is null and client.contact.email is not null %}
+                                                    {{ client.contact.email }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ client.isEnabled ? 'Actif' : 'Non Actif' }}</td>
+                                            <td>
+                                                <a class="btn btn-{% if client.isEnabled %}danger{% else %}success{% endif %}"
+                                                   href="{{ path('admin_client_disable', {'id': client.id}) }}">
+                                                    <i class="icon dripicons-checkmark"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables end -->
+{% endblock %}

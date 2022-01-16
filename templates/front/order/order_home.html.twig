@@ -40,11 +40,17 @@
                     <div class="border p-4 rounded mb-4">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                         <ul class="list-unstyled mb-0">
+                            <li class="mb-1">
+                                <a href="{{ path('order_home', {'taxon': '', 'melange': '1'}) }}" class="d-flex">
+                                    <span>Melange</span>
+                                    <span class="text-white ml-auto badge bg-info">{{ count_default_product() }}</span>
+                                </a>
+                            </li>
                             {% for taxon in taxons %}
                                 <li class="mb-1">
                                     <a href="{{ path('order_home', {'taxon': taxon.id}) }}" class="d-flex">
                                         <span>{{ taxon.label }}</span>
-                                        <span class="text-black ml-auto">{{ count_product(taxon.id) }}</span>
+                                        <span class="text-white ml-auto badge bg-info">{{ count_product(taxon.id) }}</span>
                                     </a>
                                 </li>
                             {% endfor %}

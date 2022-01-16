@@ -140,4 +140,16 @@ class OrderManagementController extends AbstractBaseAdminController
             return $this->redirectToRoute('admin_order_to_shipped');
         }
     }
+
+    /**
+     * @Route("/details/{id}", name="details")
+     *
+     * @param Order $order
+     *
+     * @return Response
+     */
+    public function detailsOrder(Order $order)
+    {
+        return $this->render('admin/order/order_details.html.twig', ['order' => $order]);
+    }
 }

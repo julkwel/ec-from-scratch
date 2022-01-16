@@ -50,6 +50,16 @@ class Mailing
      */
     private $lastname;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isSeen;
+
+    public function __construct()
+    {
+        $this->isSeen = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,6 +121,18 @@ class Mailing
     public function setLastname(?string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getIsSeen(): ?bool
+    {
+        return $this->isSeen;
+    }
+
+    public function setIsSeen(?bool $isSeen): self
+    {
+        $this->isSeen = $isSeen;
 
         return $this;
     }

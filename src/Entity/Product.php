@@ -39,9 +39,9 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $tags = [];
+    private $tags;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -85,6 +85,11 @@ class Product
      */
     private $promoDiscount;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $unit;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,16 +131,21 @@ class Product
         return $this;
     }
 
-    public function getTags(): ?array
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function setTags(?array $tags): self
+    public function setTags(?string $tags): self
     {
         $this->tags = $tags;
 
         return $this;
+    }
+
+    public function getTagsToArray()
+    {
+        return explode(',', $this->tags);
     }
 
     public function getPrice(): ?float
@@ -146,6 +156,7 @@ class Product
     public function setPrice(?float $price): self
     {
         $this->price = $price;
+        $this->priceTtc = $price * 1.2;
 
         return $this;
     }
@@ -237,6 +248,18 @@ class Product
     public function setPromoDiscount(?float $promoDiscount): self
     {
         $this->promoDiscount = $promoDiscount;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?string $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }

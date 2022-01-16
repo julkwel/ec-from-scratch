@@ -20,20 +20,39 @@
                         <div class="card-body">
                             <!-- Table with outer spacing -->
                             <div class="table-responsive">
-                                <table class="table table-lg">
+                                <table class="table table-bordered">
                                     <thead>
                                     <tr>
+                                        <th>Couverture</th>
                                         <th>Nom</th>
+                                        <th>Nombre produits</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for taxon in taxons %}
                                         <tr>
-                                            <td class="text-bold-500">{{ taxon.label }}</td>
+                                            <td class="text-bold-500">
+                                                {% if taxon.image %}
+                                                    <img src="{{ asset('product_image/'~taxon.image) }}" width="100"
+                                                         alt="">
+                                                {% else %}
+                                                    <img src="{{ asset('images/logo_rec.jpg') }}" width="100" alt="">
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ taxon.label }}</td>
                                             <td>
-                                                <a href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">Modifier</a>
-                                                <a href="{{ path('admin_product_list', {'taxon': taxon.id}) }}">Produits</a>
+                                                <span class="badge bg-info">{{ count_product(taxon.id) }}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary"
+                                                   href="{{ path('admin_taxon_manage', {'id': taxon.id}) }}">
+                                                    <i class="icon dripicons-document-edit"></i>
+                                                </a>
+                                                <a class="btn btn-info"
+                                                   href="{{ path('admin_product_list', {'taxon': taxon.id}) }}">
+                                                    <i class="icon dripicons-list"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}

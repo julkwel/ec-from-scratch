@@ -3,5 +3,8 @@
 @import './assets/vendors/iconly/bold.css';
 @import './assets/vendors/perfect-scrollbar/perfect-scrollbar.css';
 @import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
+@import './assets/vendors/dripicons/webfont.css';
+@import './assets/css/pages/dripicons.css';
+@import './assets/vendors/choices.js/choices.min.css';
 @import './assets/css/app.css';
 @import './assets/css/pages/auth.css';

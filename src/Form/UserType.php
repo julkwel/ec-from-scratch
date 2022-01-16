@@ -18,8 +18,8 @@ class UserType extends AbstractType
             ->add('roles')
             ->add('firstname', TextType::class, ['label' => 'Nom'])
             ->add('lastname', TextType::class, ['label' => 'Prénom'])
-            ->add('isEnabled')
-            ->add('contact');
+            ->add('isEnabled');
+//            ->add('contact');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

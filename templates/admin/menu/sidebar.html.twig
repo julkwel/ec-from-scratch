@@ -34,6 +34,18 @@
                     </ul>
                 </li>
 
+                <li class="sidebar-item  has-sub  {% if menu_admin_client is defined %}active{% endif %}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-list-ol"></i>
+                        <span>Clients</span>
+                    </a>
+                    <ul class="submenu  {% if menu_admin_client is defined %}active{% endif %}">
+                        <li class="submenu-item {% if menu_admin_client is defined %}active{% endif %}">
+                            <a href="{{ path('admin_client_list') }}">Liste des clients</a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="sidebar-item  has-sub  {% if menu_admin_order is defined or menu_admin_order_to_shipped is defined or menu_admin_order_done is defined %}active{% endif %}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-basket"></i>
@@ -41,13 +53,16 @@
                     </a>
                     <ul class="submenu  {% if menu_admin_order is defined or menu_admin_order_to_shipped is defined or menu_admin_order_done is defined %}active{% endif %}">
                         <li class="submenu-item {% if menu_admin_order is defined %}active{% endif %}">
-                            <a href="{{ path('admin_order_to_validate_list') }}">A valider <span class="badge bg-danger">{{ count_to_validate_order() }}</span></a>
+                            <a href="{{ path('admin_order_to_validate_list') }}">A valider <span
+                                        class="badge bg-danger">{{ count_to_validate_order() }}</span></a>
                         </li>
                         <li class="submenu-item {% if menu_admin_order_to_shipped is defined %}active{% endif %}">
-                            <a href="{{ path('admin_order_to_shipped') }}">A livrer  <span class="badge bg-danger">{{ count_to_shipped_order() }}</span></a>
+                            <a href="{{ path('admin_order_to_shipped') }}">A livrer <span
+                                        class="badge bg-danger">{{ count_to_shipped_order() }}</span></a>
                         </li>
                         <li class="submenu-item {% if menu_admin_order_done is defined %}active{% endif %}">
-                            <a href="{{ path('admin_order_validate_list') }}">Terminé   <span class="badge bg-danger">{{ count_to_finalize_order() }}</span></a>
+                            <a href="{{ path('admin_order_validate_list') }}">Terminé <span
+                                        class="badge bg-danger">{{ count_to_finalize_order() }}</span></a>
                         </li>
                     </ul>
                 </li>

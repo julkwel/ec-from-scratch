@@ -59,7 +59,7 @@ class OrderManager extends AbstractManager
         $orderItem->setClient($user);
         $orderItem->setTotal($product->getPriceTtc() * $productCount);
         $orderItem->setState(OrderItem::PRE_CART);
-        $orderItem->getItem()->setStock($productCount - $orderItem->getItem()->getStock());
+        $orderItem->getItem()->setStock($orderItem->getItem()->getStock() - $productCount);
         $this->entityServices->save($orderItem);
 
         return $orderItem;
@@ -130,6 +130,7 @@ class OrderManager extends AbstractManager
             return $order;
         } catch (Exception $exception) {
             dd($exception->getMessage());
+
             return false;
         }
     }

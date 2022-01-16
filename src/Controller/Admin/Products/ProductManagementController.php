@@ -27,7 +27,7 @@ class ProductManagementController extends AbstractBaseAdminController
         $page = $request->query->getInt('page', 1);
         $queryBuilder = $productRepository->findProducts($request->get('search'));
         if ($taxon instanceof Taxon) {
-            $queryBuilder = $productRepository->findProductByTaxon($taxon->getId());
+            $queryBuilder = $productRepository->findProductByTaxon($taxon->getId(), $request->get('search'));
         }
         $pagination = $this->pagination->paginate($queryBuilder, $page, 10);
 
@@ -63,5 +63,16 @@ class ProductManagementController extends AbstractBaseAdminController
         }
 
         return $this->render('admin/product/manage_product.html.twig', ['product' => $product, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/remove/{id?}", name="remove")
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->entityServices->getEntityManager()->remove($product);
+        $this->entityServices->getEntityManager()->flush();
+
+        return $this->redirectToRoute('admin_product_list');
     }
 }

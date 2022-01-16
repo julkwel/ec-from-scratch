@@ -44,10 +44,12 @@ class OrderController extends AbstractBaseFrontController
     public function index(Request $request, ?Taxon $taxon = null)
     {
         $page = $request->query->getInt('page', 1);
-        $queryBuilder = $this->productRepository->findProducts($request->get('search'));
-
-        if ($taxon instanceof Taxon) {
+        if ($request->get('melange')) {
+            $queryBuilder = $this->productRepository->findProductWithoutRayon();
+        } elseif ($taxon instanceof Taxon) {
             $queryBuilder = $this->productRepository->findProductByTaxon($taxon->getId(), $request->get('search'));
+        } else {
+            $queryBuilder = $this->productRepository->findProducts($request->get('search'));
         }
 
         $pagination = $this->paginator->paginate($queryBuilder, $page, 10);
