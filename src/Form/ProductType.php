@@ -21,7 +21,7 @@ class ProductType extends AbstractType
         $builder
             ->add('label')
             ->add('description')
-            ->add('tags', TextType::class)
+            ->add('tags', TextType::class, ['label' => 'Tag pour faciliter la recherche du produit', 'attr' => ['class' => 'to-tagify']])
             ->add('price', IntegerType::class, ['label' => 'Prix HT'])
             ->add('discount', IntegerType::class, ['label' => '% Don'])
             ->add('unit', TextType::class, ['label' => 'Unité de mesure'])

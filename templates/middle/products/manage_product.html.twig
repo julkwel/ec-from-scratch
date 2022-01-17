@@ -14,12 +14,7 @@
                     {{ form_row(form.label) }}
                     {{ form_row(form.description) }}
                     <div class="form-group">
-                        {{ form_label(form.tags) }}
-                        <select id="{{ form.tags.vars.id }}" name="{{ form.tags.vars.full_name }}" class="choices form-select multiple-remove" multiple="multiple">
-                            {% for item in product.getTagsToArray() %}
-                                <option selected value="{{ item }}">{{ item }}</option>
-                            {% endfor %}
-                        </select>
+                        {{ form_row(form.tags) }}
                     </div>
                     <div class="mb-3">
                         <label for="formFileSm" class="form-label">Image couverture de produit</label>
