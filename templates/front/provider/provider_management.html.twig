@@ -1,6 +1,11 @@
 {% extends 'front/layout.html.twig' %}
 {% block body %}
     <div class="site-section container">
+        <div class="text-center alert alert-primary mt-5 text-sm">
+            <span class="text-gray-600">Avez vous déja un compte ?
+                <a href="{{ path('app_login') }}" class="font-bold">cliquez ici.</a>
+            </span>
+        </div>
         {{ form_start(form) }}
         <div class="card-body">
             <div class="row">

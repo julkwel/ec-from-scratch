@@ -1,0 +1,37 @@
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="{{ path('front_home') }}">VOKATSOA</a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">FOURNISSEUR</li>
+                <li class="sidebar-item  {% if menu_provider_dashboard is defined %}active{% endif %} ">
+                    <a href="{{ path('provider_dashboard_home') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li class="sidebar-item  has-sub  {% if menu_provider_product is defined %}active{% endif %}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Produits</span>
+                    </a>
+                    <ul class="submenu  {% if menu_provider_product is defined %}active{% endif %}">
+                        <li class="submenu-item  {% if menu_provider_product is defined %}active{% endif %}">
+                            <a href="{{ path('provider_product_list') }}">Products</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>

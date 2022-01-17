@@ -70,6 +70,11 @@ class User implements UserInterface
      */
     private $isEnabled;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Provider::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $provider;
+
     public function __construct()
     {
         $this->isEnabled = true;
@@ -207,6 +212,18 @@ class User implements UserInterface
     public function setIsEnabled(bool $isEnabled): self
     {
         $this->isEnabled = $isEnabled;
+
+        return $this;
+    }
+
+    public function getProvider(): ?Provider
+    {
+        return $this->provider;
+    }
+
+    public function setProvider(?Provider $provider): self
+    {
+        $this->provider = $provider;
 
         return $this;
     }

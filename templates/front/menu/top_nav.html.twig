@@ -6,7 +6,8 @@
                     <form action="{{ path('order_home') }}" class="site-block-top-search form-inline">
                         <div class="row">
                             <div class="form-group">
-                                <input type="text" name="search" class="form-control border-0" placeholder="chercher vos produits ici ...">
+                                <input type="text" name="search" class="form-control border-0"
+                                       placeholder="chercher vos produits ici ...">
                                 <button type="submit" class="btn btn-primary text-center btn-sm">
                                     <span class="icon icon-search2"></span>
                                 </button>
@@ -31,8 +32,9 @@
                                     </a>
                                 </li>
                             {% else %}
-                                <li><a href="#" title="{{ app.user.userIdentifier }}"><span class="icon icon-person"></span></a></li>
-{#                                <li><a href=""><span class="icon icon-heart-o"></span></a></li>#}
+                                <li><a href="#" title="{{ app.user.userIdentifier }}"><span
+                                                class="icon icon-person"></span></a></li>
+                                {# <li><a href=""><span class="icon icon-heart-o"></span></a></li> #}
                                 <li>
                                     <a href="{{ path('order_cart') }}" class="site-cart">
                                         <span class="icon icon-shopping_cart"></span>
@@ -63,12 +65,22 @@
                 <li class="{% if menu_home is defined %}active{% endif %}">
                     <a href="{{ path('front_home') }}">Home</a>
                 </li>
-                <li class="{% if menu_order is defined %}active{% endif %}"><a href="{{ path('order_home') }}">Shop</a></li>
-                <li class="{% if taxon_menu is defined %}active{% endif %}"><a href="{{ path('front_taxon_list') }}">Catalogue</a></li>
-                <li class="{% if menu_newness is defined %}active{% endif %}"><a href="{{ path('front_newness_list') }}">Nouveauté</a></li>
-                <li class="{% if contact_menu is defined %}active{% endif %}"><a href="{{ path('front_contact') }}">Contact</a></li>
+                <li class="{% if menu_order is defined %}active{% endif %}"><a href="{{ path('order_home') }}">Shop</a>
+                </li>
+                <li class="{% if taxon_menu is defined %}active{% endif %}"><a href="{{ path('front_taxon_list') }}">Catalogue</a>
+                </li>
+                <li class="{% if menu_newness is defined %}active{% endif %}"><a
+                            href="{{ path('front_newness_list') }}">Nouveauté</a></li>
+                <li class="{% if contact_menu is defined %}active{% endif %}"><a href="{{ path('front_contact') }}">Contact</a>
+                </li>
                 {% if app.user and is_granted('ROLE_CLIENT') %}
-                    <li class="{% if menu_order_tracking is defined %}active{% endif %}"><a href="{{ path('order_tracking') }}">Mes achats</a></li>
+                    <li class="{% if menu_order_tracking is defined %}active{% endif %}"><a
+                                href="{{ path('order_tracking') }}">Mes achats</a></li>
+                    {% if is_granted('ROLE_PROVIDER') %}
+                        <li class="{% if contact_menu is defined %}active{% endif %}">
+                            <a href="{{ path('provider_dashboard_home') }}">Accès fournisseur</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </div>

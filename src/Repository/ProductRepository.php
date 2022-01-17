@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\Provider;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -28,6 +29,30 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.label LIKE :val')
             ->orderBy('p.id', 'DESC')
+            ->setParameter('val', "%".$query."%")
+            ->getQuery();
+    }
+
+    public function findProviderProducts(Provider $provider, ?string $query)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.label LIKE :val')
+            ->andWhere('p.provider = :provider')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('provider', $provider)
+            ->setParameter('val', "%".$query."%")
+            ->getQuery();
+    }
+
+    public function findProviderProductsWithTaxon(Provider $provider, ?string $taxonId, ?string $query = '')
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.label LIKE :val')
+            ->setParameter('val', "%".$query."%")
+            ->innerJoin('p.taxon', 't', Join::WITH, 't.id ='.$taxonId)
+            ->andWhere('p.provider = :provider')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('provider', $provider)
             ->setParameter('val', "%".$query."%")
             ->getQuery();
     }
@@ -81,6 +106,19 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('COUNT(p.id)')
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function countAllProductsByProvider(Provider $provider)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.provider = :provider')
+            ->setParameter('provider', $provider)
             ->getQuery()->getSingleScalarResult();
     }
 

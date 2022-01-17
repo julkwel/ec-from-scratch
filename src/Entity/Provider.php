@@ -20,11 +20,6 @@ class Provider
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $idProvider;
@@ -59,6 +54,11 @@ class Provider
      */
     private $contact;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="provider", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -67,18 +67,6 @@ class Provider
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getIdProvider(): ?string
@@ -179,6 +167,28 @@ class Provider
     public function setContact(?string $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setProvider(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getProvider() !== $this) {
+            $user->setProvider($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }

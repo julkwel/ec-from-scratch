@@ -35,14 +35,15 @@ class UserManager extends AbstractManager
 
     public function generateProvider(Request $request, FormInterface $form, User $user, ?Provider $provider)
     {
+        $user = $this->generateUser($form, $user)->setRoles(['ROLE_CLIENT', 'ROLE_PROVIDER']);
         $provider = $provider ?? new Provider();
         $provider->setLabel($request->get('label'));
         $provider->setAdresse($request->get('adresse'));
         $provider->setNifStat($request->get('nif_stat'));
         $provider->setContact($request->get('contact'));
-        $provider->setUser($this->generateUser($form, $user)->setRoles(['ROLE_CLIENT', 'ROLE_PROVIDER']));
         $provider->setIdProvider($this->generateOrderId());
-        $this->entityServices->save($provider);
+        $user->setProvider($provider);
+        $this->entityServices->save($user);
 
         return $provider;
     }

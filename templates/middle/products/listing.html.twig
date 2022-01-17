@@ -1,0 +1,73 @@
+{% extends 'middle/layout.html.twig' %}
+{% set menu_provider_product = true %}
+{% block body %}
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title">Liste des produits</h4>
+                            </div>
+                            <div class="col justify-content-end d-flex">
+                                <a class="btn btn-success" href="{{ path('provider_product_manage') }}">Nouveau</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table  table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Rayon</th>
+                                        <th>Libellé</th>
+                                        <th>Image</th>
+                                        <th>Prix</th>
+                                        <th>Remise / Don</th>
+                                        <th>Stock</th>
+                                        <th>Prix TTC</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td class="text-bold-500">{{ product.taxon ? product.taxon.label : 'Default' }}</td>
+                                            <td class="text-bold-500">{{ product.label }}</td>
+                                            <td class="text-bold-500">
+                                                {% if product.image is not empty %}
+                                                    <img src="{{ asset('product_image/'~product.image) }}" width="50"
+                                                         height="50" alt="">
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ product.price }} Ar</td>
+                                            <td>{{ product.discount }} %</td>
+                                            <td>{{ product.stock }} </td>
+                                            <td>{{ product.priceTtc }} Ar</td>
+                                            <td>
+                                                <a class="btn btn-primary"
+                                                   href="{{ path('provider_product_manage', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-document-edit"></i>
+                                                </a>
+                                                <a class="btn btn-danger"
+                                                   href="{{ path('provider_product_change_state', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {{ knp_pagination_render(products) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables end -->
+{% endblock %}

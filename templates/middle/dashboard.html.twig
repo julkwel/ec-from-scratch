@@ -1,0 +1,49 @@
+{% extends 'middle/layout.html.twig' %}
+{% set menu_admin_dashboard = true %}
+{% block body %}
+    <section class="row">
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldCategory"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Mes Produits</h6>
+                                    <h6 class="font-extrabold mb-0">{{ count_all_provider_product(app.user.provider) }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="card">
+                <div class="card-body py-4 px-5">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-xl">
+                            <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Face 1">
+                        </div>
+                        <div class="ms-3 name">
+                            <h6 class="text-muted mb-0">@{{ app.user.getUserIdentifier() }}</h6>
+                            <ul class="list">
+                                <li class="list-item">
+                                    <a href="{{ path('front_home') }}">Page d'accueil</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_logout') }}">Se deconnecter</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
