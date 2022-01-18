@@ -9,3 +9,4 @@
 @import './assets/css/app.css';
 @import './assets/css/pages/auth.css';
 @import '~@yaireo/tagify/dist/tagify.css';
+@import "~dropzone/dist/dropzone.css";

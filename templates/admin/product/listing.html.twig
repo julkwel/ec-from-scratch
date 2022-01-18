@@ -29,6 +29,8 @@
                                         <th>Remise / Don</th>
                                         <th>Stock</th>
                                         <th>Prix TTC</th>
+                                        <th>Validation</th>
+                                        <th>Actif</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -46,6 +48,16 @@
                                             <td>{{ product.discount }} %</td>
                                             <td>{{ product.stock }} </td>
                                             <td>{{ product.priceTtc }} Ar</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-{% if product.isValid %}success{% else %}danger{% endif %}" href="{{ path('admin_product_change_validation_state', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-{% if product.isValid %}checkmark{% else %}cross{% endif %}"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-{% if product.isEnabled %}success{% else %}danger{% endif %}" href="{{ path('admin_product_change_state', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-{% if product.isEnabled %}checkmark{% else %}cross{% endif %}"></i>
+                                                </a>
+                                            </td>
                                             <td>
                                                 <a class="btn btn-primary"  href="{{ path('admin_product_manage', {'id': product.id}) }}">
                                                     <i class="icon dripicons-document-edit"></i>

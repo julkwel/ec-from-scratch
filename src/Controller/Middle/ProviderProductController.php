@@ -69,6 +69,9 @@ class ProviderProductController extends AbstractMiddleController
         if ($form->isSubmitted() && $form->isValid()) {
             $productImage = $form->get('image')->getData();
             $provider = $this->getUser()->getProvider();
+            if (!$product->getIsValid()) {
+                $product->setIsValid(false);
+            }
 
             if ($productImage instanceof UploadedFile) {
                 $this->fileUploader->setTargetDirectory($this->getParameter('product_image'));

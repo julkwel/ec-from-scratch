@@ -19,8 +19,8 @@ class HomePageController extends AbstractBaseFrontController
      */
     public function index(): Response
     {
-        $featured = $this->productRepository->findBy(['isNewness' => true], [], 6);
-        $promos = $this->productRepository->findBy(['isPromo' => true], [], 6);
+        $featured = $this->productRepository->findBy(['isNewness' => true, 'isEnabled' => true, 'isValid' => true], [], 6);
+        $promos = $this->productRepository->findBy(['isPromo' => true, 'isEnabled' => true, 'isValid' => true], [], 6);
         $taxons = $this->taxonRepository->findBy([], [], 3);
 
         return $this->render('front/home_page.html.twig', ['featured' => $featured, 'promos' => $promos, 'taxons' => $taxons]);

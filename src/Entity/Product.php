@@ -105,6 +105,17 @@ class Product
      */
     private $isValid;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $images = [];
+
+    public function __construct()
+    {
+        $this->isEnabled = false;
+        $this->isValid = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -311,6 +322,18 @@ class Product
     public function setIsValid(?bool $isValid): self
     {
         $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    public function getImages(): ?array
+    {
+        return $this->images;
+    }
+
+    public function setImages(?array $images): self
+    {
+        $this->images = $images;
 
         return $this;
     }

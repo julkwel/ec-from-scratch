@@ -10,6 +10,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,6 +64,28 @@ class ProductManagementController extends AbstractBaseAdminController
         }
 
         return $this->render('admin/product/manage_product.html.twig', ['product' => $product, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/state/{id}", name="change_state")
+     */
+    public function productChangeState(Product $product): RedirectResponse
+    {
+        $product->setIsEnabled(!$product->getIsEnabled());
+        $this->entityServices->save($product);
+
+        return $this->redirectToRoute('admin_product_list');
+    }
+
+    /**
+     * @Route("/validation/{id}", name="change_validation_state")
+     */
+    public function productChangeValidationState(Product $product): RedirectResponse
+    {
+        $product->setIsValid(!$product->getIsValid());
+        $this->entityServices->save($product);
+
+        return $this->redirectToRoute('admin_product_list');
     }
 
     /**

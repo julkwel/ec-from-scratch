@@ -37,7 +37,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.label LIKE :val')
-            ->andWhere('p.provider = :provider')
+            ->setParameter('enable', true)
             ->orderBy('p.id', 'DESC')
             ->setParameter('provider', $provider)
             ->setParameter('val', "%".$query."%")
@@ -51,9 +51,9 @@ class ProductRepository extends ServiceEntityRepository
             ->setParameter('val', "%".$query."%")
             ->innerJoin('p.taxon', 't', Join::WITH, 't.id ='.$taxonId)
             ->andWhere('p.provider = :provider')
-            ->orderBy('p.id', 'DESC')
             ->setParameter('provider', $provider)
             ->setParameter('val', "%".$query."%")
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
     }
 
@@ -126,6 +126,10 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.isNewness = :val')
+            ->andWhere('p.isEnabled = :enable')
+            ->andWhere('p.isValid = :valid')
+            ->setParameter('enable', true)
+            ->setParameter('valid', true)
             ->setParameter('val', true)
             ->orderBy('p.id', 'DESC')
             ->getQuery();
