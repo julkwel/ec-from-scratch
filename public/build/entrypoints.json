@@ -1,0 +1,39 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_hotwired_stimulus_dist_stimulus_js.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_hotwired_stimulus_dist_stimulus_js.js",
+        "/build/vendors-node_modules_core-js_internals_create-html_js-node_modules_core-js_internals_string-h-916706.js",
+        "/build/vendors-node_modules_yaireo_tagify_dist_tagify_esm_js-node_modules_core-js_modules_es_array_e-205766.js",
+        "/build/admin.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_yaireo_tagify_dist_tagify_esm_js-node_modules_core-js_modules_es_array_e-205766.css",
+        "/build/admin.css"
+      ]
+    },
+    "front": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_hotwired_stimulus_dist_stimulus_js.js",
+        "/build/vendors-node_modules_core-js_internals_create-html_js-node_modules_core-js_internals_string-h-916706.js",
+        "/build/vendors-node_modules_core-js_modules_es_date_now_js-node_modules_core-js_modules_es_object_ge-af3287.js",
+        "/build/front.js"
+      ],
+      "css": [
+        "/build/front.css"
+      ]
+    }
+  }
+}
