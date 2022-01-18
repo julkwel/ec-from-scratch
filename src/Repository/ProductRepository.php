@@ -37,7 +37,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.label LIKE :val')
-            ->setParameter('enable', true)
+            ->andWhere('p.provider = :provider')
             ->orderBy('p.id', 'DESC')
             ->setParameter('provider', $provider)
             ->setParameter('val', "%".$query."%")

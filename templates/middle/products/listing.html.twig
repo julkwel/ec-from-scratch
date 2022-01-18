@@ -12,7 +12,9 @@
                                 <h4 class="card-title">Liste des produits</h4>
                             </div>
                             <div class="col justify-content-end d-flex">
-                                <a class="btn btn-success" href="{{ path('provider_product_manage') }}">Nouveau</a>
+                                <a class="btn btn-primary" href="{{ path('provider_product_manage') }}">
+                                    <i class="icon dripicons-plus"></i> Ajouter nouveau produit
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -29,6 +31,7 @@
                                         <th>Remise / Don</th>
                                         <th>Stock</th>
                                         <th>Prix TTC</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -46,7 +49,12 @@
                                             <td>{{ product.price }} Ar</td>
                                             <td>{{ product.discount }} %</td>
                                             <td>{{ product.stock }} </td>
-                                            <td>{{ product.priceTtc }} Ar</td>
+                                            <td>{{ product.priceTtc|number_format(2, ',' ,' ') }} Ar</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-{% if product.isEnabled %}success{% else %}danger{% endif %}" href="{{ path('provider_product_change_state', {'id': product.id}) }}">
+                                                    <i class="icon dripicons-{% if product.isEnabled %}checkmark{% else %}cross{% endif %}"></i>
+                                                </a>
+                                            </td>
                                             <td>
                                                 <a class="btn btn-primary"
                                                    href="{{ path('provider_product_manage', {'id': product.id}) }}">
