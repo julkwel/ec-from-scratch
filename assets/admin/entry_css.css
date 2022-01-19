@@ -10,3 +10,4 @@
 @import './assets/css/pages/auth.css';
 @import '~@yaireo/tagify/dist/tagify.css';
 @import "~dropzone/dist/dropzone.css";
+@import "./assets/css/custom.css";

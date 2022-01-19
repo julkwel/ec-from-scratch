@@ -1,0 +1,8 @@
+#auth #auth-left .auth-logo{
+    display: flex;
+    justify-content: center;
+}
+
+#auth #auth-left .auth-logo img{
+    height: 13rem;
+}

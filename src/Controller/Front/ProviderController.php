@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/provider", name="provider_")
+ * @Route("/fournisseur", name="provider_")
  */
 class ProviderController extends AbstractBaseFrontController
 {
 
     /**
-     * @Route("/provider/{id?}", name="manage")
+     * @Route("/compte/{id?}", name="manage")
      *
      * @throws Exception
      */
