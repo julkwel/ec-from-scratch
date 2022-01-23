@@ -77,8 +77,9 @@ class ProviderProductController extends AbstractMiddleController
                 $this->fileUploader->setTargetDirectory($this->getParameter('product_image'));
                 $filename = $this->fileUploader->upload($productImage);
                 $product->setImage($filename);
-                $product->setProvider($provider);
             }
+
+            $product->setProvider($provider);
             $this->entityServices->save($product);
 
             return $this->redirectToRoute('provider_product_list');
