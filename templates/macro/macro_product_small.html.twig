@@ -3,16 +3,25 @@
         <div class="item">
             <div class="block-4 text-center">
                 <figure class="block-4-image">
-                    <img src="{{ asset('product_image/'~product.image) }}"
-                         alt="{{ product.label }}" style="height: 250px!important;"
-                         class="img-fluid">
+                    {% if product.image %}
+                        <img src="{{ asset('product_image/'~product.image) }}"
+                             alt="{{ product.label }}" style="height: 250px!important;"
+                             class="img-fluid">
+                    {% else %}
+                        <img src="{{ asset('images/logo_rec.jpg') }}" alt="" width=100>
+                    {% endif %}
                 </figure>
                 <div class="block-4-text p-4">
                     <h3>
                         <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a>
                     </h3>
                     <p class="mb-0">{{ product.description|slice(0, 50) }}</p>
-                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</p>
+                    <p class="text-primary font-weight-bold">
+                        <span>Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</span>
+                        |
+                        <mark>stock</mark>
+                        : <span class="badge badge-info">{{ product.stock > 0 ? product.stock : 0 }}</span>
+                    </p>
                 </div>
                 {{ _self.order_checkout_container(product) }}
             </div>
@@ -26,13 +35,22 @@
             <div class="block-4 text-center border">
                 <figure class="block-4-image">
                     <a href="{{ path('product_details', {'id': product.id}) }}">
+                        {% if product.image %}
                         <img src="{{ asset('product_image/'~product.image) }}"
                              alt="Image placeholder" class="img-fluid"></a>
+                    {% else %}
+                        <img src="{{ asset('images/logo_rec.jpg') }}" alt="" width=100>
+                    {% endif %}
                 </figure>
                 <div class="block-4-text p-4">
                     <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.label }}</a></h3>
                     <p class="mb-0">{{ product.description|slice(0, 30) }}</p>
-                    <p class="text-primary font-weight-bold">Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</p>
+                    <p class="text-primary font-weight-bold">
+                        <span>Ar {{ product.priceTtc|number_format(2, ',', ' ') }}</span>
+                        |
+                        <mark>stock</mark>
+                        : <span class="badge badge-info">{{ product.stock > 0 ? product.stock : 0 }}</span>
+                    </p>
                 </div>
                 {{ _self.order_checkout_container(product) }}
             </div>
@@ -41,23 +59,26 @@
 {% endmacro %}
 
 {% macro order_checkout_container(product) %}
-    {% if app.user %}
+    {% if app.user and is_granted('ROLE_CLIENT') %}
         <form action="{{ path('order_create_item') }}">
             <div class="mb-2 d-flex justify-content-center">
                 <input type="text" hidden name="product" value="{{ product.id }}">
                 <div class="input-group mb-3" style="max-width: 200px;">
+                    <input type="text" class="d-none js-stock-input" hidden value="{{ product.stock }}">
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                     </div>
-                    <input type="text" name="number" class="form-control text-center" value="1" placeholder=""
+                    <input type="text" name="number" class=" js-input-number-order form-control text-center" value="1"
+                           placeholder=""
                            aria-label="Example text with button addon" aria-describedby="button-addon1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                     </div>
                     <div class="input-group-append">
-                        <button href="{{ path('order_create_item') }}" class="btn btn-outline-primary"
-                                title="ajouter au panier"
-                                type="submit">
+                        <button {{ product.stock <= 0 ? 'disabled' : '' }} href="{{ path('order_create_item') }}"
+                                                                           class="btn btn-outline-primary"
+                                                                           title="ajouter au panier"
+                                                                           type="submit">
                             <i class="icon icon-shopping-cart"></i>
                         </button>
                     </div>
@@ -67,8 +88,8 @@
     {% else %}
         <div class="input-group-append d-flex justify-content-center mb-2">
             <a href="{{ path('app_login') }}" class="btn btn-primary mb-2"
-                    title="ajouter au panier"
-                    type="submit">
+               title="ajouter au panier"
+               type="submit">
                 <i class="icon icon-shopping-basket"></i>
             </a>
         </div>
@@ -81,27 +102,34 @@
             <td class="product-thumbnail">
                 {% if order_item.item.image is not null %}
                     <img src="{{ asset('product_image/'~order_item.item.image) }}" alt="Image" class="img-fluid">
+                {% else %}
+                    <img src="{{ asset('images/logo_rec.jpg') }}" alt="" width=100>
                 {% endif %}
             </td>
             <td class="product-name">
                 <h2 class="h5 text-black">{{ order_item.item.label }}</h2>
             </td>
-            <td>Ar {{ order_item.item.priceTtc|number_format(2, ',', ' ') }}</td>
+            <td>
+                <span>Ar {{ order_item.item.priceTtc|number_format(2, ',', ' ') }}</span> <br>
+                <mark>En stock {{ order_item.item.stock > 0 ? order_item.item.stock : 0 }}
+            </td>
             <td>
                 <form action="{{ path('order_create_item', {'id' : order_item.id}) }}">
                     <div class="input-group mb-3" style="max-width: 200px;">
                         <input type="text" hidden name="product" value="{{ order_item.item.id }}">
+                        <input type="text" class="d-none  js-stock-input" hidden value="{{ order_item.item.stock }}">
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;
-                            </button>
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                         </div>
-                        <input type="text" class="form-control text-center" name="number" value="{{ order_item.count }}"
+                        <input type="text"
+                               class="form-control text-center js-input-number-order"
+                               name="number"
+                               value="{{ order_item.count }}"
                                placeholder=""
                                aria-label="Example text with button addon"
                                aria-describedby="button-addon1">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
-                            </button>
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                         </div>
                         <div class="input-group-append">
                             <button href="{{ path('order_create_item', {'id' : order_item.id}) }}"
@@ -123,7 +151,11 @@
 {% macro render_product_details(product) %}
     <div class="row">
         <div class="col-md-6">
-            <img src="{{ asset('product_image/'~product.image) }}" alt="Image" class="img-fluid">
+            {% if product.image %}
+                <img src="{{ asset('product_image/'~product.image) }}" alt="Image" class="img-fluid">
+            {% else %}
+                <img src="{{ asset('images/logo_rec.jpg') }}" alt="" width=100>
+            {% endif %}
         </div>
         <div class="col-md-6">
             <h2 class="text-black">{{ product.label }}</h2>

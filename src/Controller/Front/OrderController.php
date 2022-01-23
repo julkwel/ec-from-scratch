@@ -83,6 +83,17 @@ class OrderController extends AbstractBaseFrontController
      */
     public function addToCart(Request $request, ?OrderItem $item = null): RedirectResponse
     {
+//        if (!$item || !$item->getItem()) {
+//            $this->addFlash('error', 'Produit non disponible !');
+//
+//            return  $this->redirectToRoute('order_home');
+//        }
+
+        if ($item && $item->getItem() & ($item->getItem()->getStock() <= 0)) {
+            $this->addFlash('error', 'Produit non disponible en stock !');
+
+            return  $this->redirectToRoute('order_home');
+        }
         $this->orderManager->generateOrderItem($item, $this->getUser(), $request);
 
         return $this->redirectToRoute('order_cart');

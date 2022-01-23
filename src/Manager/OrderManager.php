@@ -80,7 +80,7 @@ class OrderManager extends AbstractManager
             $items = $queryBuilder->getResult();
 
             if (!$request->get('ref_paiement')) {
-                throw new Exception('Paiement ref is required');
+                return 'La reference de paiement est obligatoire';
             }
 
             $firstname = $request->get('firstname');

@@ -66,6 +66,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-item  {% if menu_admin_contact is defined %}active{% endif %} ">
+                    <a href="{{ path('admin_contact_listing') }}" class='sidebar-link'>
+                        <i class="bi bi-mailbox"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

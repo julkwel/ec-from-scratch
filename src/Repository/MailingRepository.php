@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Mailing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +20,16 @@ class MailingRepository extends ServiceEntityRepository
         parent::__construct($registry, Mailing::class);
     }
 
-    // /**
-    //  * @return Mailing[] Returns an array of Mailing objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Query
+     */
+    public function findAllMailing()
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->orderBy('m.id', 'DESC')
+            ->getQuery();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Mailing

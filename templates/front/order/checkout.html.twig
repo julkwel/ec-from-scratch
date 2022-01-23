@@ -8,6 +8,10 @@
                     <div class="border p-4 rounded" role="alert">
                         Retourner vers la page d'achat ? <a href="{{ path('order_cart') }}">Cliquez ici</a>
                     </div>
+                    <div class="border p-4 alert-info mt-1" role="alert">
+                        Le frais de la livraison est payer au moment de la livraison, <mark>3 000 ar</mark> si en ville, <mark>5 000ar</mark> en péripherie,
+                        Si vous etes en province, veuillez nous contacter d'abord.
+                    </div>
                 </div>
             </div>
             <form action="" method="post">
@@ -81,15 +85,12 @@
                         <div class="row mb-5">
                             <div class="col-md-12">
                                 <h2 class="h3 mb-3 text-black">Paiement code Code</h2>
-                                {# <div class="p-3 p-lg-5 border"> #}
-                                {# <label for="c_code" class="text-black mb-3">Entrer le code de promotion si vous #}
-                                {# l'avez</label> #}
-                                {# <div class="input-group w-100"> #}
-                                {# <input type="text" class="form-control" id="promo_code" #}
-                                {# placeholder="Coupon Code" #}
-                                {# aria-label="Coupon Code"> #}
-                                {# </div> #}
-                                {# </div> #}
+                                <div class="p-3 border mb-3">
+                                    <span class="d-block text-primary h6 text-uppercase">MOBILE MONEY VOKATSOA</span>
+                                    <p class="mb-0">Telma : +261 34 25 564 87</p>
+                                    <p class="mb-0">Orange: +261 32 25 265 45</p>
+                                    <p class="mb-0">Airtel: +261 33 33 254 22</p>
+                                </div>
                                 <div class="p-3 p-lg-5 border">
                                     <label for="c_code" class="text-black mb-3">
                                         Entrer la référence mobile money de votre paiement
@@ -135,8 +136,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Place Order
-                                        </button>
+                                        <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Terminer</button>
                                     </div>
                                 </div>
                             </div>

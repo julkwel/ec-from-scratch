@@ -1,0 +1,32 @@
+{% extends 'admin/layout.html.twig' %}
+{% set admin_menu_contact = true %}
+
+{% block body %}
+    <section class="section">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="pricing">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 p-2 m-auto">
+                            <div class="card card-text">
+                                <div class="card-header">
+                                    <h5>Client: {{ mail.mail }}</h5>
+                                    <h5>Sujet: {{ mail.subject }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="price">Date: {{ mail.createdAt|date('d-m-Y h:i') }}</h5>
+                                    <p class="">{{ mail.message }}</p>
+                                    <div class="mt-5">
+                                        <a href="{{ path('admin_contact_listing') }}" class="btn btn-primary">
+                                            <i class="dripicons dripicons-arrow-left"></i> Revenir a la liste
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

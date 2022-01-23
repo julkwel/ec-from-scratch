@@ -1,0 +1,55 @@
+{% extends 'admin/layout.html.twig' %}
+{% set admin_menu_contact = true %}
+
+{% block body %}
+    <section class="section">
+        <div class="row" id="basic-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title">Liste des mails</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table  table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Contact</th>
+                                        <th>Date</th>
+                                        <th>Sujet</th>
+                                        <th>Message</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for mailing in mailings %}
+                                        <tr>
+                                            <td class="text-bold-500">{{ mailing.mail }}</td>
+                                            <td class="text-bold-500">{{ mailing.createdAt|date('d-m-Y h:i') }}</td>
+                                            <td class="text-bold-500">{{ mailing.subject|slice(0, 100) }}</td>
+                                            <td>
+                                                <a class="btn btn-primary"  href="{{ path('admin_contact_details', {'id': mailing.id}) }}">
+                                                    <i class="icon dripicons-mail"></i>
+                                                </a>
+                                                <a class="btn btn-danger" href="{{ path('admin_contact_remove', {'id': mailing.id}) }}">
+                                                    <i class="icon dripicons-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {{ knp_pagination_render(mailings) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
