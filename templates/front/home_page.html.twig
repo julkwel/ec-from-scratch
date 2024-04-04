@@ -2,14 +2,16 @@
 {% import 'macro/macro_product_small.html.twig' as macro_product %}
 {% set menu_home = true %}
 {% block body %}
-    <div class="site-blocks-cover" style="background-image: url({{ asset('images/hero_1.jpg') }});" data-aos="fade">
+    <div class="site-blocks-cover" data-aos="fade">
         <div class="container-fluid">
             <div class="row align-items-start align-items-md-center justify-content-end">
+                <div class="col-md-7 vh-100">
+                    <img src="{{ asset('assets/images/bg/product.png') }}" width="100%" alt="">
+                </div>
                 <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
-                    <h1 class="mb-2">Finding Your Perfect Shoes</h1>
+                    <h1 class="mb-2">Quel produit vous ferait plaisir aujourd'hui ?</h1>
                     <div class="intro-text text-center text-md-left">
-                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at
-                            iaculis quam. Integer accumsan tincidunt fringilla. </p>
+                        <p class="mb-4">Parcourez notre sélection et découvrez une gamme variée d'articles de qualité pour répondre à vos besoins et envies !. </p>
                         <a href="{{ path('order_home') }}" class="btn btn-primary m-1">
                             <i class="icon icon-shopping-basket"></i> Visitez votre magasin
                         </a>
@@ -67,10 +69,10 @@
                             <figure class="image">
                                 {% if taxon.image %}
                                     <img src="{{ asset('product_image/'~taxon.image) }}" alt=""
-                                         style="min-height: 430px!important;" class="img-fluid">
+                                         style="min-height: 300px!important;" class="img-fluid">
                                 {% else %}
-                                    <img src="{{ asset('assets/images/samples/motorcycle.jpg') }}"
-                                         style="min-height: 430px!important;" alt="" class="img-fluid">
+                                    <img src="{{ asset('product_image/basket.png') }}"
+                                         style="min-height: 300px!important;" alt="" class="img-fluid">
                                 {% endif %}
                             </figure>
                             <div class="text">

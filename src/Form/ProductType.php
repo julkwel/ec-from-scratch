@@ -27,7 +27,7 @@ class ProductType extends AbstractType
             ->add('discount', IntegerType::class, ['label' => '% Don'])
             ->add('unit', TextType::class, ['label' => 'Unité de mesure'])
             ->add('stock', IntegerType::class, ['label' => 'Nombre en stock'])
-            ->add('taxon', EntityType::class, ['class' => Taxon::class, 'choice_label' => 'label', 'required' => false])
+            ->add('taxon', EntityType::class, ['class' => Taxon::class, 'choice_label' => 'label', 'required' => false, 'label' => 'Rayon *'])
             ->add('image', FileType::class, ['mapped' => false, 'attr' => ['class' => 'form-control form-control-sm'], 'required' => false])
             ->add('isNewness', CheckboxType::class, ['label' => 'En nouveauté', 'required' => false])
             ->add('isPromo', CheckboxType::class, ['label' => 'En promotion', 'required' => false])
